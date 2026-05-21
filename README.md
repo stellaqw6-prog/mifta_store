@@ -1,1 +1,0 @@
-# mifta_store
