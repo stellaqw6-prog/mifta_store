@@ -31,117 +31,180 @@ body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);mi
 #v-admin{display:none;background:var(--dark);color:var(--dt);min-height:100vh;}
 #v-admin.on{display:flex;}
 
-/* ═══════════════════════════
-   LOGIN
-═══════════════════════════ */
-#v-login{min-height:100vh;background:var(--dark);display:none;align-items:center;justify-content:center;padding:20px;}
+/* ── LOADING SPLASH ── */
+#splash{position:fixed;inset:0;background:#0f1014;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9999;transition:opacity .35s;}
+#splash.out{opacity:0;pointer-events:none;}
+.sp-logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#c84220,#f07040);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 10px 32px rgba(200,66,10,.45);animation:sp-pulse 1.5s ease-in-out infinite;}
+@keyframes sp-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.sp-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:#fff;}
+.sp-sub{font-size:.72rem;color:#555;}
+.sp-dots{display:flex;gap:5px;margin-top:4px;}
+.sp-dots span{width:6px;height:6px;border-radius:50%;background:#c84220;animation:sp-dot .9s ease-in-out infinite;}
+.sp-dots span:nth-child(2){animation-delay:.18s;}
+.sp-dots span:nth-child(3){animation-delay:.36s;}
+@keyframes sp-dot{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1.2)}}
+
+/* ═══════════════════════════ LOGIN ═══════════════════════════ */
+#v-login{min-height:100vh;background:#0b0810;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;position:relative;overflow:hidden;}
 #v-login.on{display:flex;}
-.login-bg{  position:fixed;inset:0;  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(124,106,245,.22) 0%,transparent 60%),             radial-gradient(ellipse 60% 50% at 90% 90%,rgba(0,212,184,.12) 0%,transparent 50%),             radial-gradient(ellipse 50% 40% at 10% 80%,rgba(200,66,10,.07) 0%,transparent 50%);  pointer-events:none;}.login-bg::after{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(124,106,245,.04) 1px,transparent 1px);background-size:30px 30px;pointer-events:none;}.login-card{  background:linear-gradient(180deg,rgba(18,16,38,.98) 0%,rgba(10,10,20,.98) 100%);  border:1px solid rgba(124,106,245,.18);  border-radius:20px;width:100%;max-width:420px;  box-shadow:0 40px 100px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05);  overflow:hidden;position:relative;z-index:1;}.login-top{  padding:32px 32px 24px;text-align:center;  border-bottom:1px solid rgba(124,106,245,.1);  background:rgba(124,106,245,.03);}.login-glyph{  width:56px;height:56px;border-radius:15px;  background:linear-gradient(135deg,#c84220,#f07040);  display:inline-flex;align-items:center;justify-content:center;  font-size:1.6rem;margin-bottom:16px;  box-shadow:0 8px 24px rgba(200,66,10,.4);}.login-title{font-family:'DM Serif Display',serif;font-size:1.75rem;background:linear-gradient(135deg,#fff 30%,#a89cf5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}.login-sub{font-size:0.78rem;color:var(--dt3);}.login-tabs{display:flex;gap:3px;background:rgba(0,0,0,.3);padding:4px;border-radius:10px;margin:18px 32px 0;border:1px solid rgba(124,106,245,.1);}.ltab{flex:1;padding:8px;border-radius:7px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;background:transparent;color:var(--dt3);transition:all .18s;}.ltab.on{background:rgba(124,106,245,.15);color:var(--dt);box-shadow:0 1px 6px rgba(124,106,245,.2);}.login-body{padding:24px 32px 28px;}.lg{margin-bottom:14px;}.ll{display:block;font-size:0.67rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;}.li{width:100%;padding:10px 13px;background:rgba(0,0,0,.3);border:1.5px solid rgba(124,106,245,.15);border-radius:9px;color:var(--dt);font-family:'Outfit',sans-serif;font-size:0.85rem;outline:none;transition:border .2s;}.li:focus{border-color:var(--neon);background:rgba(124,106,245,.05);}.li::placeholder{color:var(--dt3);}.li-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}.lbtn{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;background:linear-gradient(135deg,#c84220,#e05030);color:#fff;transition:all .18s;margin-top:4px;letter-spacing:.2px;box-shadow:0 4px 16px rgba(200,66,10,.35);}.lbtn:hover{background:linear-gradient(135deg,#e05030,#c84220);transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,66,10,.45);}.lbtn:disabled{background:var(--dark5);cursor:not-allowed;transform:none;box-shadow:none;}.admin-tip{background:rgba(124,106,245,.08);border:1px solid rgba(124,106,245,.2);border-radius:8px;padding:10px 13px;font-size:0.72rem;color:#a89cf5;margin-top:14px;line-height:1.6;}
-/* ═══════════════════════════
-   STORE — USER VIEW
-═══════════════════════════ */
-#v-store{min-height:100vh;background:var(--paper);}
-.sh{background:var(--ink);position:sticky;top:0;z-index:50;}
-.sh-inner{max-width:680px;margin:0 auto;height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;}
-.sh-logo{font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;}
-.sh-logo em{color:#c8a07a;}
-.sh-right{display:flex;align-items:center;gap:10px;}
-.sh-user{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px 5px 7px;}
-.sh-av{width:22px;height:22px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;color:#fff;}
-.sh-uname{font-size:0.74rem;color:#ccc;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.sh-kelas{font-size:0.68rem;color:#666;}
-.btn-out{padding:5px 11px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#666;cursor:pointer;font-size:0.72rem;font-weight:600;font-family:'Outfit',sans-serif;transition:.15s;}
+/* BG blobs */
+#v-login::before{content:'';position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(200,66,10,.2) 0%,transparent 65%);top:-160px;left:-120px;animation:blob1 9s ease-in-out infinite alternate;pointer-events:none;}
+#v-login::after{content:'';position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(100,80,200,.14) 0%,transparent 65%);bottom:-100px;right:-80px;animation:blob2 11s ease-in-out infinite alternate;pointer-events:none;}
+@keyframes blob1{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,20px) scale(1.08)}}
+@keyframes blob2{from{transform:translate(0,0) scale(1)}to{transform:translate(-25px,-30px) scale(1.06)}}
+/* Brand */
+.login-brand{text-align:center;margin-bottom:24px;position:relative;z-index:1;}
+.login-glyph{width:70px;height:70px;border-radius:22px;background:linear-gradient(135deg,#c84220,#f07040);display:inline-flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:13px;box-shadow:0 14px 40px rgba(200,66,10,.5);animation:float 3.5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.login-title{font-family:'DM Serif Display',serif;font-size:2rem;background:linear-gradient(135deg,#fff 20%,#c8906a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:2px;}
+.login-sub{font-size:.68rem;color:#4a3a30;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;display:block;}
+/* Card */
+.login-card{background:rgba(16,11,20,.88);border:1px solid rgba(255,255,255,.07);border-radius:22px;width:100%;max-width:390px;box-shadow:0 28px 70px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden;position:relative;z-index:1;backdrop-filter:blur(16px);}
+.login-top{padding:20px 22px 16px;border-bottom:1px solid rgba(255,255,255,.05);}
+/* Role + auth tabs */
+.login-tabs{display:flex;background:rgba(0,0,0,.35);border-radius:10px;padding:3px;gap:3px;border:1px solid rgba(255,255,255,.05);}
+.ltab{flex:1;padding:8px 6px;border-radius:8px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;background:transparent;color:#4a3a30;transition:all .2s;white-space:nowrap;}
+.ltab.on{background:rgba(200,66,10,.2);color:#e8a87c;border:1px solid rgba(200,66,10,.25);}
+#auth-tabs .ltab.on{background:rgba(255,255,255,.08);color:#e8d5c0;border:1px solid rgba(255,255,255,.08);}
+/* Form */
+.login-body{padding:20px 22px 24px;}
+.lg{margin-bottom:13px;}
+.ll{display:block;font-size:.63rem;font-weight:700;color:#4a3a30;text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.li{width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.07);border-radius:9px;color:#fff;font-family:'Outfit',sans-serif;font-size:.86rem;outline:none;transition:all .2s;box-sizing:border-box;}
+.li:focus{border-color:rgba(200,66,10,.55);background:rgba(200,66,10,.05);}
+.li::placeholder{color:#2e2018;}
+.li-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lbtn{width:100%;padding:13px;border-radius:11px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:800;background:linear-gradient(135deg,#c84220,#e86030);color:#fff;transition:all .22s;letter-spacing:.2px;box-shadow:0 6px 22px rgba(200,66,10,.42);}
+.lbtn:hover{transform:translateY(-1px);box-shadow:0 9px 28px rgba(200,66,10,.55);}
+.lbtn:disabled{background:rgba(255,255,255,.08);cursor:not-allowed;transform:none;box-shadow:none;color:#3a2a20;}
+.admin-tip{background:rgba(100,80,200,.08);border:1px solid rgba(100,80,200,.15);border-radius:8px;padding:10px 13px;font-size:.7rem;color:#7060b8;margin-top:12px;line-height:1.6;text-align:center;}
+
+/* ═══════════════════════════ STORE — redesigned ═══════════════════════════ */
+#v-store{min-height:100vh;background:#f5f2ed;display:none;}
+#v-store.on{display:block;}
+
+/* ── Top header ── */
+.sh{background:linear-gradient(135deg,#1a1410 0%,#2d1f14 100%);position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.sh-inner{max-width:680px;margin:0 auto;height:58px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.sh-logo{display:flex;align-items:center;gap:9px;}
+.sh-badge{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#c84220,#f07040);display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 3px 10px rgba(200,66,10,.4);flex-shrink:0;}
+.sh-brand{font-family:'DM Serif Display',serif;font-size:1.05rem;color:#fff;line-height:1.1;}
+.sh-brand small{display:block;font-family:'Outfit',sans-serif;font-size:.58rem;color:#8a7060;font-weight:600;letter-spacing:.8px;text-transform:uppercase;}
+.sh-right{display:flex;align-items:center;gap:8px;}
+.sh-user-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:5px 10px 5px 6px;cursor:pointer;}
+.sh-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#c84220,#f07040);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;}
+.sh-uname{font-size:0.72rem;color:#ccc;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.btn-out{padding:5px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#666;cursor:pointer;font-size:0.7rem;font-weight:600;font-family:'Outfit',sans-serif;transition:.15s;}
 .btn-out:hover{color:#fff;border-color:rgba(255,255,255,.3);}
 
-/* Hero */
-.s-hero{background:var(--ink);padding:28px 20px 34px;border-bottom:3px solid var(--fire);text-align:center;}
-.s-hero-inner{max-width:680px;margin:0 auto;}
-.s-tag{display:inline-block;background:rgba(200,66,10,.2);color:#f08060;border:1px solid rgba(200,66,10,.3);font-size:0.67rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:11px;}
-.s-htitle{font-family:'DM Serif Display',serif;font-size:2rem;color:#fff;line-height:1.2;margin-bottom:7px;}
-.s-htitle em{color:#c8a07a;}
-.s-hsub{font-size:0.78rem;color:#888;line-height:1.6;max-width:400px;margin:0 auto;}
-.s-hnote{display:inline-flex;align-items:center;gap:6px;background:rgba(200,66,10,.15);border:1px solid rgba(200,66,10,.25);color:#f09070;font-size:0.72rem;padding:5px 13px;border-radius:7px;margin-top:13px;}
+/* ── Hero card ── */
+.s-hero{background:linear-gradient(160deg,#1a1410 0%,#2d1f14 50%,#1a0c05 100%);padding:24px 16px 28px;position:relative;overflow:hidden;}
+.s-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 80% 50%,rgba(200,66,10,.15) 0%,transparent 70%);pointer-events:none;}
+.s-hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:1;}
+.s-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(200,66,10,.18);color:#f08060;border:1px solid rgba(200,66,10,.3);font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px;}
+.s-htitle{font-family:'DM Serif Display',serif;font-size:1.9rem;color:#fff;line-height:1.2;margin-bottom:6px;}
+.s-htitle em{color:#e8a87c;font-style:italic;}
+.s-hsub{font-size:0.76rem;color:#888;line-height:1.6;max-width:380px;}
+.s-hnote{display:inline-flex;align-items:center;gap:6px;background:rgba(200,66,10,.12);border:1px solid rgba(200,66,10,.22);color:#f09070;font-size:0.7rem;padding:4px 11px;border-radius:6px;margin-top:11px;}
+/* Running banner */
+.s-banner-wrap{background:rgba(30,15,5,.9);border-bottom:1px solid rgba(200,66,10,.2);overflow:hidden;position:relative;}
+.s-banner-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
+.s-banner-track:hover{animation-play-state:paused;}
+.s-banner-item{display:flex;align-items:center;gap:7px;padding:6px 24px;font-size:.7rem;font-weight:600;color:#c8906a;white-space:nowrap;}
+.s-banner-item span{color:#e8a87c;}
+.s-banner-dot{color:rgba(200,66,10,.4);}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* Store tabs */
-.s-tabbar{background:var(--ink);border-bottom:1px solid rgba(255,255,255,.06);padding:0 20px;}
-.s-tabbar-inner{max-width:680px;margin:0 auto;display:flex;}
-.s-tabbt{padding:10px 18px;border:none;background:transparent;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;color:#555;transition:.18s;border-bottom:2px solid transparent;}
-.s-tabbt.on{color:#fff;border-bottom-color:var(--fire);}
-.s-tabbt:hover{color:#aaa;}
-
-/* Store content */
-.s-wrap{max-width:680px;margin:0 auto;padding:20px 16px;}
-.sc{background:#fff;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:13px;}
-.sc-hd{padding:13px 17px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:8px;}
-.sc-icon{font-size:.92rem;}
-.sc-title{font-size:0.83rem;font-weight:700;color:var(--ink);}
-.sc-sub{font-size:0.7rem;color:var(--ink3);margin-left:auto;}
-.sc-body{padding:15px 17px;}
+/* ── Store content ── */
+.s-wrap{max-width:680px;margin:0 auto;padding:16px 14px 100px;}
+.sc{background:#fff;border:1px solid #e8e2d9;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.sc-hd{padding:12px 16px;border-bottom:1px solid #f0ebe2;display:flex;align-items:center;gap:8px;background:#fdfcfa;}
+.sc-icon{font-size:.9rem;}
+.sc-title{font-size:0.82rem;font-weight:700;color:var(--ink);}
+.sc-sub{font-size:0.69rem;color:var(--ink3);margin-left:auto;}
+.sc-body{padding:14px 16px;}
 
 /* Paket grid */
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.pc{border:2px solid var(--rule);border-radius:9px;padding:13px;cursor:pointer;transition:all .18s;background:var(--paper2);position:relative;}
-.pc:hover{border-color:var(--fire);transform:translateY(-1px);box-shadow:0 4px 16px rgba(200,66,10,.1);}
-.pc.on{border-color:var(--fire);background:var(--fire-l);}
-.pc.on::after{content:'✓';position:absolute;top:8px;right:9px;width:18px;height:18px;border-radius:50%;background:var(--fire);color:#fff;font-size:.6rem;font-weight:900;display:flex;align-items:center;justify-content:center;}
-.pc-name{font-size:0.83rem;font-weight:800;color:var(--ink);}
-.pc-desc{font-size:0.7rem;color:var(--ink3);margin-top:3px;line-height:1.5;}
-.pc-price{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--fire);margin-top:7px;}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.pc{border:2px solid #e8e2d9;border-radius:11px;padding:13px;cursor:pointer;transition:all .18s;background:#fdfcfa;position:relative;}
+.pc:hover{border-color:#c84220;transform:translateY(-1px);box-shadow:0 4px 16px rgba(200,66,10,.1);}
+.pc.on{border-color:#c84220;background:linear-gradient(135deg,#fff8f5,#fef2ec);}
+.pc.on::after{content:'✓';position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:#c84220;color:#fff;font-size:.6rem;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.pc-name{font-size:0.82rem;font-weight:800;color:var(--ink);}
+.pc-desc{font-size:0.69rem;color:var(--ink3);margin-top:3px;line-height:1.5;}
+.pc-price{font-family:'DM Serif Display',serif;font-size:1.05rem;color:#c84220;margin-top:7px;}
 
 /* Paket 1 selects */
 .p1g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.fl{display:block;font-size:0.66rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
-.fs,.fi{width:100%;padding:8px 11px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:8px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:0.82rem;outline:none;transition:border .2s;}
-.fs:focus,.fi:focus{border-color:var(--fire);background:#fff;}
+.fl{display:block;font-size:0.65rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.fs,.fi{width:100%;padding:8px 10px;background:#fdfcfa;border:1.5px solid #e8e2d9;border-radius:8px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:0.81rem;outline:none;transition:border .2s;}
+.fs:focus,.fi:focus{border-color:#c84220;background:#fff;}
 
 /* Prod list */
 .prl{margin-bottom:0;}
-.pr{display:flex;align-items:center;padding:9px 11px;border-radius:8px;background:var(--paper2);border:1.5px solid var(--rule);transition:all .15s;margin-bottom:5px;}
+.pr{display:flex;align-items:center;padding:10px 12px;border-radius:9px;background:#fdfcfa;border:1.5px solid #e8e2d9;transition:all .15s;margin-bottom:6px;}
 .pr:last-child{margin-bottom:0;}
-.pr.hq{border-color:var(--fire);background:var(--fire-l);}
+.pr.hq{border-color:#c84220;background:linear-gradient(135deg,#fff8f5,#fef2ec);}
 .pr-name{flex:1;font-size:0.82rem;font-weight:500;color:var(--ink);}
-.pr-price{font-size:0.75rem;color:var(--fire);font-weight:700;margin-right:12px;}
+.pr-price{font-size:0.74rem;color:#c84220;font-weight:700;margin-right:12px;}
 .qc{display:flex;align-items:center;gap:7px;}
-.qb{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--rule2);background:#fff;color:var(--ink);cursor:pointer;font-size:.92rem;display:flex;align-items:center;justify-content:center;transition:.15s;}
-.qb:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
-.qv{font-size:0.84rem;font-weight:700;min-width:16px;text-align:center;}
-.warn-k{display:none;align-items:center;gap:7px;background:var(--gold-l);border:1px solid #e8cc70;border-radius:8px;padding:8px 12px;font-size:0.76rem;color:var(--gold);margin-bottom:9px;}
+.qb{width:28px;height:28px;border-radius:7px;border:1.5px solid #ddd9cf;background:#fff;color:var(--ink);cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:.15s;font-weight:700;}
+.qb:hover{background:#c84220;color:#fff;border-color:#c84220;}
+.qv{font-size:0.84rem;font-weight:700;min-width:18px;text-align:center;}
+.warn-k{display:none;align-items:center;gap:7px;background:var(--gold-l);border:1px solid #e8cc70;border-radius:8px;padding:8px 12px;font-size:0.75rem;color:var(--gold);margin-bottom:9px;}
 
 /* Total bar */
-.tbar{background:var(--ink);border-radius:10px;padding:14px 17px;display:flex;align-items:center;justify-content:space-between;margin:3px 0 13px;}
+.tbar{background:linear-gradient(135deg,#1a1410,#2d1f14);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;}
 .tbar-l{display:flex;flex-direction:column;gap:2px;}
-.tbar-lbl{font-size:0.67rem;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
-.tbar-val{font-family:'DM Serif Display',serif;font-size:1.45rem;color:#fff;}
-.tbar-items{font-size:0.68rem;color:#888;margin-top:1px;}
-.tbar-min{font-size:0.68rem;padding:3px 9px;border-radius:5px;background:rgba(255,255,255,.08);color:#777;}
+.tbar-lbl{font-size:0.65rem;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.tbar-val{font-family:'DM Serif Display',serif;font-size:1.5rem;color:#fff;}
+.tbar-items{font-size:0.67rem;color:#888;margin-top:1px;}
+.tbar-min{font-size:0.67rem;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.08);color:#777;}
 .tbar-min.ok{background:rgba(0,201,122,.15);color:#4ade96;}
-.sbtn{width:100%;padding:13px;background:var(--fire);color:#fff;border:none;border-radius:9px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:7px;}
-.sbtn:hover{background:#aa3608;transform:translateY(-1px);}
-.sbtn:disabled{background:var(--ink3);cursor:not-allowed;transform:none;}
+.sbtn{width:100%;padding:14px;background:linear-gradient(135deg,#c84220,#e05030);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 16px rgba(200,66,10,.3);}
+.sbtn:hover{background:linear-gradient(135deg,#e05030,#c84220);transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,66,10,.4);}
+.sbtn:disabled{background:#ccc6be;cursor:not-allowed;transform:none;box-shadow:none;}
 
 /* Success */
-.suc{display:none;background:#fff;border:1px solid var(--rule);border-radius:var(--r);padding:32px 22px;text-align:center;}
+.suc{display:none;background:#fff;border:1px solid #e8e2d9;border-radius:14px;padding:28px 20px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .suc.on{display:block;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
 @keyframes popIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
 .suc-icon{font-size:2.8rem;margin-bottom:10px;}
 .suc-title{font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--ink);margin-bottom:5px;}
-.suc-sub{font-size:0.8rem;color:var(--ink3);line-height:1.6;margin-bottom:18px;}
-.suc-detail{background:var(--paper2);border-radius:9px;padding:13px 15px;text-align:left;margin-bottom:16px;}
-.suc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:0.79rem;color:var(--ink2);}
-.suc-row.tot{font-weight:700;color:var(--ink);border-top:1px solid var(--rule);padding-top:7px;margin-top:3px;}
-.suc-row.tot span:last-child{color:var(--fire);font-family:'DM Serif Display',serif;font-size:.98rem;}
-.reset-btn{padding:10px 22px;border-radius:8px;border:1.5px solid var(--rule2);background:transparent;color:var(--ink2);cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:600;transition:.18s;}
+.suc-sub{font-size:0.78rem;color:var(--ink3);line-height:1.6;margin-bottom:16px;}
+.suc-detail{background:#fdfcfa;border-radius:9px;padding:13px 15px;text-align:left;margin-bottom:14px;border:1px solid #e8e2d9;}
+.suc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:0.78rem;color:var(--ink2);}
+.suc-row.tot{font-weight:700;color:var(--ink);border-top:1px solid #e8e2d9;padding-top:7px;margin-top:3px;}
+.suc-row.tot span:last-child{color:#c84220;font-family:'DM Serif Display',serif;font-size:.97rem;}
+.reset-btn{padding:10px 22px;border-radius:8px;border:1.5px solid #ddd9cf;background:transparent;color:var(--ink2);cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:600;transition:.18s;}
 .reset-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
 
 /* My orders */
-.oc{background:var(--paper2);border:1px solid var(--rule);border-radius:9px;padding:13px 14px;margin-bottom:8px;}
+.oc{background:#fdfcfa;border:1px solid #e8e2d9;border-radius:11px;padding:13px 14px;margin-bottom:8px;}
 .oc-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.oc-name{font-size:0.85rem;font-weight:700;color:var(--ink);}
-.oc-meta{font-size:0.7rem;color:var(--ink3);margin-top:1px;}
-.oc-items{font-size:0.76rem;color:var(--ink2);margin-bottom:8px;line-height:1.5;}
+.oc-name{font-size:0.84rem;font-weight:700;color:var(--ink);}
+.oc-meta{font-size:0.69rem;color:var(--ink3);margin-top:1px;}
+.oc-items{font-size:0.75rem;color:var(--ink2);margin-bottom:8px;line-height:1.5;}
 .oc-ft{display:flex;justify-content:space-between;align-items:center;}
-.oc-total{font-size:0.85rem;font-weight:800;color:var(--fire);}
-.oc-id{font-size:0.68rem;color:var(--ink3);font-family:'DM Serif Display',serif;}
+.oc-total{font-size:0.84rem;font-weight:800;color:#c84220;}
+.oc-id{font-size:0.67rem;color:var(--ink3);font-family:'DM Serif Display',serif;}
+
+/* ── BOTTOM NAV ── */
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:8000;background:rgba(26,20,16,.97);border-top:1px solid rgba(200,66,10,.18);display:none;grid-template-columns:repeat(3,1fr);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 24px rgba(0,0,0,.4);}
+#bottom-nav.show{display:grid;}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 6px;border:none;background:transparent;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .18s;position:relative;}
+.bnav-ico{font-size:1.25rem;transition:transform .2s;}
+.bnav-lbl{font-size:.59rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4a3f38;transition:color .18s;}
+.bnav-btn.on .bnav-ico{transform:translateY(-2px);}
+.bnav-btn.on .bnav-lbl{color:#e8a87c;}
+.bnav-btn.on::after{content:'';position:absolute;bottom:0;left:28%;right:28%;height:2px;background:linear-gradient(90deg,#c84220,#f07040);border-radius:2px 2px 0 0;}
+.bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);min-width:15px;height:15px;border-radius:8px;padding:0 3px;background:#f87171;border:2px solid rgba(26,20,16,.97);font-size:.5rem;font-weight:800;color:#fff;display:none;align-items:center;justify-content:center;}
+.bnav-badge.on{display:flex;}
+
+/* ── Old tabbar hide ── */
+.s-tabbar,.s-tabbar-inner,.s-tabbt{display:none!important;}
+.sh-kelas{display:none;}
+
 
 /* ═══════════════════════════
    ADMIN PANEL
@@ -579,7 +642,7 @@ html,body{overflow-x:hidden;max-width:100vw;}
 
 /* ══════════════════════════════════════
    ADMIN POWER FEATURES
-   ── Laporan, Chart, Karbol, Export, Print
+   ── Laporan, Chart, Export, Print
 ══════════════════════════════════════ */
 
 /* ─── LAPORAN STATE ─── */
@@ -918,89 +981,19 @@ window.printStruk = (id) => {
   window.print();
 };
 
-/* ─── KARBOL MANAGEMENT ─── */
-async function loadKarbolData() {
-  try {
-    const snap = await getDoc(doc(db,'settings','karbol'));
-    if (snap.exists()) {
-      const data = snap.data();
-      karbolLimit = data.limit || 8;
-      const inp = document.getElementById('karbol-limit-input');
-      if (inp) inp.value = karbolLimit;
-      set('karbol-limit-disp', karbolLimit);
-    }
+/* ─── (removed) ─── */
+async function loadKarbolData(){}
   } catch(e){}
-  renderKarbolGrid();
+  
 }
 
-function renderKarbolGrid() {
-  const grid = document.getElementById('karbol-grid'); if(!grid) return;
-  // Count karbol per kelas from orders
-  const kelasMap = {};
-  allOrders.forEach(o => {
-    if (!o.kelas) return;
-    if (!kelasMap[o.kelas]) kelasMap[o.kelas] = 0;
-    o.items?.forEach(it => { if(it.toLowerCase().includes('karbol')) kelasMap[o.kelas]++; });
-  });
+function renderKarbolGrid(){}
 
-  // Get all unique classes
-  const classes = [...new Set([
-    ...allUsers.map(u=>u.kelas),
-    ...Object.keys(kelasMap)
-  ].filter(Boolean))].sort();
+window.saveKarbolLimit=async()=>{};
 
-  if (!classes.length) {
-    grid.innerHTML = '<div style="color:var(--dt3);font-size:.78rem;padding:8px">Belum ada data kelas. Daftarkan member dulu.</div>';
-    return;
-  }
+window.setKarbolKelas=async()=>{};
 
-  grid.innerHTML = classes.map(kelas => {
-    const count = kelasMap[kelas] || 0;
-    const pct   = Math.min(100, Math.round((count/karbolLimit)*100));
-    const barClass = pct >= 100 ? 'full' : pct >= 75 ? 'warn' : '';
-    const isFull   = count >= karbolLimit;
-    return `<div class="karbol-card">
-      <div class="karbol-kelas">${kelas}</div>
-      <div class="karbol-progress">
-        <div class="karbol-bar ${barClass}" style="width:${pct}%"></div>
-      </div>
-      <div class="karbol-info">
-        <span class="karbol-count" style="color:${isFull?'#f87171':'inherit'}">${count}/${karbolLimit} ${isFull?'🚫':''}</span>
-        <span class="karbol-pct">${pct}%</span>
-      </div>
-      <div class="karbol-actions">
-        <input type="number" class="karbol-adj" id="k-adj-${kelas}" value="${count}" min="0" max="${karbolLimit+10}" title="Override jumlah karbol">
-        <button class="btn btn-g btn-sm" onclick="setKarbolKelas('${kelas}')">Set</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-window.saveKarbolLimit = async () => {
-  const val = parseInt(document.getElementById('karbol-limit-input')?.value)||8;
-  karbolLimit = val;
-  await setDoc(doc(db,'settings','karbol'), { limit: val });
-  set('karbol-limit-disp', val);
-  renderKarbolGrid();
-  toast('✅ Batas karbol disimpan: '+val+' per kelas');
-};
-
-window.setKarbolKelas = async (kelas) => {
-  const val = parseInt(document.getElementById('k-adj-'+kelas)?.value)||0;
-  await setDoc(doc(db,'karbol',kelas), { count: val, updatedAt: serverTimestamp() });
-  toast('✅ Karbol '+kelas+' diset ke '+val);
-  renderKarbolGrid();
-};
-
-window.resetAllKarbol = async () => {
-  if(!confirm('Reset semua data karbol ke 0?')) return;
-  const classes = [...new Set(allUsers.map(u=>u.kelas).filter(Boolean))];
-  for(const k of classes){
-    await setDoc(doc(db,'karbol',k),{count:0,updatedAt:serverTimestamp()});
-  }
-  toast('🔄 Semua karbol direset!');
-  renderKarbolGrid();
-};
+window.resetAllKarbol=async()=>{};
 
 
 /* ─── USER MANAGEMENT ─── */
@@ -1075,7 +1068,7 @@ window.resetAllKarbol = async () => {
 .chart-lbl{font-size:.56rem;color:var(--dt3);margin-top:5px;white-space:nowrap;}
 .chart-val{font-size:.6rem;color:var(--dt2);margin-bottom:3px;font-weight:700;}
 
-/* ─── KARBOL CARD ─── */
+/* ─── (removed) ─── */
 .karbol-card{background:var(--dark3);border:1px solid var(--dark5);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;}
 .karbol-kelas{font-size:.78rem;font-weight:700;color:var(--dt);}
 .karbol-progress{height:6px;background:var(--dark5);border-radius:3px;overflow:hidden;}
@@ -1156,58 +1149,92 @@ window.resetAllKarbol = async () => {
 
 <!-- ══════════════════ LOGIN ══════════════════ -->
 <div id="v-login" class="view">
-  <div class="login-bg"></div>
+
+  <!-- Brand above card -->
+  <div class="login-brand">
+    <div class="login-glyph">🧴</div>
+    <span class="login-title">Unit Produksi</span>
+    <span class="login-sub">Toko Produk Kelas</span>
+  </div>
+
+  <!-- Card -->
   <div class="login-card">
     <div class="login-top">
-      <div class="login-glyph">🧴</div>
-      <div class="login-title">Unit Produksi</div>
-      <!-- Role selector -->
-      <div class="login-tabs" style="margin-top:14px">
-        <button class="ltab on" id="role-user-btn" onclick="setLoginRole('user',this)">👤 Masuk sebagai User</button>
+      <!-- Role toggle -->
+      <div class="login-tabs" style="margin-bottom:10px;">
+        <button class="ltab on" id="role-user-btn" onclick="setLoginRole('user',this)">👤 User</button>
         <button class="ltab" id="role-admin-btn" onclick="setLoginRole('admin',this)">🔐 Admin</button>
       </div>
-      <!-- Login/Register tabs (hanya untuk user) -->
-      <div class="login-tabs" id="auth-tabs" style="margin-top:6px">
+      <!-- Login/Register tabs -->
+      <div class="login-tabs" id="auth-tabs">
         <button class="ltab on" id="tab-login-btn" onclick="showLTab('login',this)">Masuk</button>
-        <button class="ltab" id="tab-reg-btn" onclick="showLTab('register',this)">Daftar</button>
+        <button class="ltab" id="tab-reg-btn" onclick="showLTab('register',this)">Daftar Baru</button>
       </div>
     </div>
 
-    <!-- LOGIN (User & Admin) -->
+    <!-- LOGIN form -->
     <div id="lp-login" class="login-body">
-      <div class="lg"><label class="ll">Email</label><input class="li" type="email" id="l-email" placeholder="email@contoh.com"></div>
-      <div class="lg"><label class="ll">Password</label><input class="li" type="password" id="l-pass" placeholder="Password kamu" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="lg">
+        <label class="ll">Email</label>
+        <input class="li" type="email" id="l-email" placeholder="email@sekolah.com" autocomplete="email">
+      </div>
+      <div class="lg">
+        <label class="ll">Password</label>
+        <input class="li" type="password" id="l-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
       <button class="lbtn" id="l-btn" onclick="doLogin()">Masuk →</button>
     </div>
 
-    <!-- REGISTER (User only) -->
+    <!-- REGISTER form -->
     <div id="lp-register" class="login-body" style="display:none">
-      <div class="li-grid" style="margin-bottom:14px">
-        <div class="lg" style="margin:0"><label class="ll">Nama</label><input class="li" type="text" id="r-name" placeholder="Nama lengkap"></div>
-        <div class="lg" style="margin:0"><label class="ll">Kelas</label><input class="li" type="text" id="r-kelas" placeholder="X-A"></div>
+      <div class="li-grid" style="margin-bottom:13px">
+        <div class="lg" style="margin:0">
+          <label class="ll">Nama</label>
+          <input class="li" type="text" id="r-name" placeholder="Nama lengkap">
+        </div>
+        <div class="lg" style="margin:0">
+          <label class="ll">Kelas</label>
+          <input class="li" type="text" id="r-kelas" placeholder="cth: X-A">
+        </div>
       </div>
-      <div class="lg"><label class="ll">Email</label><input class="li" type="email" id="r-email" placeholder="email@contoh.com"></div>
-      <div class="lg"><label class="ll">Password</label><input class="li" type="password" id="r-pass" placeholder="Min. 6 karakter" onkeydown="if(event.key==='Enter')doRegister()"></div>
+      <div class="lg">
+        <label class="ll">Email</label>
+        <input class="li" type="email" id="r-email" placeholder="email@sekolah.com">
+      </div>
+      <div class="lg">
+        <label class="ll">Password</label>
+        <input class="li" type="password" id="r-pass" placeholder="Min. 6 karakter" onkeydown="if(event.key==='Enter')doRegister()">
+      </div>
       <button class="lbtn" id="r-btn" onclick="doRegister()">Daftar Sekarang →</button>
     </div>
   </div>
+
+  <!-- Footer note -->
+  <div style="margin-top:18px;font-size:.68rem;color:#2e2018;text-align:center;position:relative;z-index:1;">
+    Unit Produksi · Produk Berkualitas untuk Kelas
+  </div>
+
 </div>
+
+
 
 <!-- ══════════════════ STORE ══════════════════ -->
 <div id="v-store" class="view">
+
+  <!-- Sticky Header -->
   <div class="sh">
     <div class="sh-inner">
-      <div class="sh-logo" id="store-logo-el">
-        <em id="store-name-el">Unit Produksi</em>
-        <span class="sh-logo-sub" id="store-tagline-el">PRODUK KELAS</span>
+      <div class="sh-logo">
+        <div class="sh-badge">🧴</div>
+        <div class="sh-brand">
+          <span id="store-name-el">Unit Produksi</span>
+          <small id="store-tagline-el">PRODUK KELAS</small>
+        </div>
       </div>
       <div class="sh-right">
-        <div class="sh-user">
+        <div class="sh-user-pill">
           <div class="sh-av" id="st-av">U</div>
-          <div>
-            <div class="sh-uname" id="st-name">—</div>
-            <div class="sh-kelas" id="st-kelas"></div>
-          </div>
+          <div class="sh-uname" id="st-name">—</div>
         </div>
         <button class="btn-out" onclick="doLogout()">Keluar</button>
       </div>
@@ -1216,21 +1243,21 @@ window.resetAllKarbol = async () => {
 
   <!-- Running Banner -->
   <div class="s-banner-wrap" id="s-banner-wrap">
-    <div class="s-banner-track" id="s-banner-track">
-      <!-- filled by JS -->
-    </div>
+    <div class="s-banner-track" id="s-banner-track"></div>
   </div>
 
+  <!-- Hero -->
   <div class="s-hero">
     <div class="s-hero-inner">
       <div class="s-tag">🧴 <span id="hero-tag-el">Produk Kelas</span></div>
       <div class="s-htitle" id="hero-title-el">Beli Produk<br><em id="hero-brand-el">Unit Produksi</em></div>
-      <div class="s-hsub" id="hero-sub-el">Produk kebutuhan rumah tangga. Untuk acc ujian atau jual kembali.</div>
-      <div class="s-hnote" id="hero-note-el">⚠️ Karbol dibatasi 8 produk per kelas</div>
+      <div class="s-hsub" id="hero-sub-el">Produk kebutuhan rumah tangga berkualitas, harga terjangkau.</div>
+      
     </div>
   </div>
 
-  <div class="s-tabbar">
+  <!-- Hidden old tabbar (kept for JS compat) -->
+  <div class="s-tabbar" style="display:none!important">
     <div class="s-tabbar-inner">
       <button class="s-tabbt on" id="stab-btn-order" onclick="showStoreTab('order',this)">🛒 Pesan</button>
       <button class="s-tabbt" id="stab-btn-myorders" onclick="showStoreTab('myorders',this)">📋 Pesanan Saya<span id="my-order-badge" style="display:none;margin-left:5px;background:#f87171;color:#fff;font-size:.58rem;padding:1px 5px;border-radius:9px;font-weight:700">!</span></button>
@@ -1243,37 +1270,32 @@ window.resetAllKarbol = async () => {
     <!-- TAB ORDER -->
     <div id="stab-order">
       <div id="main-form">
-
-        <!-- Pilih Paket -->
         <div class="sc">
           <div class="sc-hd"><span class="sc-icon">📦</span><span class="sc-title">Pilih Paket</span><span class="sc-sub">Wajib dipilih</span></div>
           <div class="sc-body">
-            <div class="pgrid" id="store-paket-grid"><!-- diisi dinamis --></div>
+            <div class="pgrid" id="store-paket-grid"></div>
           </div>
         </div>
 
-        <!-- Paket 1 -->
         <div id="sec-paket1" class="sc" style="display:none">
           <div class="sc-hd"><span class="sc-icon">📦</span><span class="sc-title">Pilih 3 Produk — Paket 1</span></div>
           <div class="sc-body">
             <div class="p1g">
-              <div><label class="fl">Produk 1</label><select class="fs" id="p1a"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option><option>Karbol</option></select></div>
-              <div><label class="fl">Produk 2</label><select class="fs" id="p1b"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option><option>Karbol</option></select></div>
-              <div><label class="fl">Produk 3</label><select class="fs" id="p1c"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option><option>Karbol</option></select></div>
+              <div><label class="fl">Produk 1</label><select class="fs" id="p1a"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option></select></div>
+              <div><label class="fl">Produk 2</label><select class="fs" id="p1b"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option></select></div>
+              <div><label class="fl">Produk 3</label><select class="fs" id="p1c"><option value="">— Pilih —</option><option>Sabun Cuci Piring</option><option>Deterjen</option></select></div>
             </div>
           </div>
         </div>
 
-        <!-- Satuan -->
         <div id="sec-satuan" class="sc" style="display:none">
           <div class="sc-hd"><span class="sc-icon">🛍️</span><span class="sc-title">Pilih Produk Satuan</span><span class="sc-sub" style="color:var(--gold)">Min. Rp20.000</span></div>
           <div class="sc-body">
-            <div class="warn-k" id="warn-karbol">⚠️ Karbol sudah mencapai batas 8 untuk kelas ini!</div>
+            
             <div class="prl" id="prod-list"></div>
           </div>
         </div>
 
-        <!-- Konfirmasi -->
         <div class="sc">
           <div class="sc-hd"><span class="sc-icon">✅</span><span class="sc-title">Konfirmasi Pesanan</span></div>
           <div class="sc-body">
@@ -1290,7 +1312,6 @@ window.resetAllKarbol = async () => {
         </div>
       </div>
 
-      <!-- Success -->
       <div class="suc" id="success-box">
         <div class="suc-icon">🎉</div>
         <div class="suc-title">Pesanan Berhasil!</div>
@@ -1310,28 +1331,21 @@ window.resetAllKarbol = async () => {
 
     <!-- TAB PROFIL -->
     <div id="stab-profil" style="display:none">
-
-      <!-- Notif Bell Card -->
       <div class="sc" id="notif-card" style="display:none">
         <div class="sc-hd"><span class="sc-icon">🔔</span><span class="sc-title">Notifikasi Terbaru</span><span class="sc-sub" id="notif-count-lbl"></span></div>
         <div id="notif-list" style="padding:0 4px 4px"></div>
       </div>
-
-      <!-- Profile Card -->
       <div class="sc">
         <div class="sc-hd"><span class="sc-icon">👤</span><span class="sc-title">Profil Saya</span></div>
         <div class="sc-body">
-          <!-- Avatar + info -->
-          <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:var(--paper2);border-radius:10px;border:1px solid var(--rule)">
-            <div id="profil-av-big" style="width:54px;height:54px;min-width:54px;border-radius:14px;background:var(--fire);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#fff;box-shadow:0 4px 14px rgba(200,66,10,.3)">U</div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:#fdfcfa;border-radius:10px;border:1px solid #e8e2d9">
+            <div id="profil-av-big" style="width:54px;height:54px;min-width:54px;border-radius:14px;background:linear-gradient(135deg,#c84220,#f07040);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#fff;box-shadow:0 4px 14px rgba(200,66,10,.3)">U</div>
             <div style="flex:1;min-width:0">
               <div id="profil-nama-disp" style="font-size:1rem;font-weight:800;color:var(--ink)">—</div>
               <div id="profil-kelas-disp" style="font-size:.74rem;color:var(--ink3);margin-top:2px">—</div>
               <div id="profil-email-disp" style="font-size:.7rem;color:var(--ink3);margin-top:1px">—</div>
             </div>
           </div>
-
-          <!-- Edit Form -->
           <div style="margin-bottom:12px">
             <label style="display:block;font-size:.67rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Nama</label>
             <input type="text" id="profil-nama-inp" class="fs" placeholder="Nama lengkap kamu" style="width:100%">
@@ -1343,8 +1357,6 @@ window.resetAllKarbol = async () => {
           <button id="profil-save-btn" class="sbtn" onclick="saveProfil()" style="background:linear-gradient(135deg,#1a4d8c,#0f3060);box-shadow:0 4px 14px rgba(26,77,140,.35)">💾 Simpan Perubahan</button>
         </div>
       </div>
-
-      <!-- Ganti Password -->
       <div class="sc">
         <div class="sc-hd"><span class="sc-icon">🔑</span><span class="sc-title">Ganti Password</span></div>
         <div class="sc-body">
@@ -1359,16 +1371,13 @@ window.resetAllKarbol = async () => {
           <button id="profil-pass-btn" class="sbtn" onclick="savePassword()" style="background:linear-gradient(135deg,#2d6a4f,#1a4a35);box-shadow:0 4px 14px rgba(45,106,79,.35)">🔒 Ganti Password</button>
         </div>
       </div>
-
-      <!-- Logout -->
-      <div style="padding:4px 0 20px">
-        <button onclick="doLogout()" style="width:100%;padding:12px;border-radius:10px;border:1.5px solid rgba(200,66,10,.3);background:rgba(200,66,10,.06);color:#c84220;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">🚪 Keluar dari Akun</button>
+      <div style="padding:8px 0 4px;text-align:center">
+        <button onclick="doLogout()" style="width:100%;padding:12px;border-radius:10px;border:1.5px solid #e8a87c33;background:transparent;color:#c84220;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">🚪 Keluar dari Akun</button>
       </div>
-
     </div>
 
-  </div>
-</div>
+  </div><!-- /s-wrap -->
+</div><!-- /v-store -->
 
 <!-- ══════════════════ ADMIN ══════════════════ -->
 <div id="v-admin" class="view">
@@ -1582,25 +1591,6 @@ window.resetAllKarbol = async () => {
           <div id="p-paket-list" style="padding:8px 16px 14px"></div>
         </div>
 
-        <!-- Karbol Management -->
-        <div class="panel" style="margin-bottom:16px">
-          <div class="panel-hd">
-            <span class="panel-title">🧴 Manajemen Karbol per Kelas</span>
-            <button class="btn btn-g btn-sm" onclick="resetAllKarbol()">🔄 Reset Semua</button>
-          </div>
-          <div class="panel-body">
-            <div style="font-size:.72rem;color:var(--dt3);margin-bottom:12px">Batas karbol per kelas: <b id="karbol-limit-disp">8</b> produk. Ubah limit di bawah.</div>
-            <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px">
-              <label class="fld" style="margin:0;white-space:nowrap">Batas per Kelas:</label>
-              <input class="fin" type="number" id="karbol-limit-input" value="8" min="1" max="50" style="width:80px;padding:7px 10px">
-              <button class="btn btn-p btn-sm" onclick="saveKarbolLimit()">Simpan</button>
-            </div>
-            <div id="karbol-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px">
-              <div style="color:var(--dt3);font-size:.78rem;padding:8px">Memuat data kelas...</div>
-            </div>
-          </div>
-        </div>
-
         <!-- Pengaturan Toko -->
         <div class="panel">
           <div class="panel-hd"><span class="panel-title">&#x1F3EA; Pengaturan Toko</span></div>
@@ -1621,7 +1611,7 @@ window.resetAllKarbol = async () => {
             </div>
             <div style="margin-bottom:12px">
               <label class="fld" style="display:block;margin-bottom:5px">Catatan Penting (⚠️ di hero)</label>
-              <input class="fin" type="text" id="cfg-note" placeholder="Karbol dibatasi 8 produk per kelas" oninput="previewStore()">
+              <input class="fin" type="text" id="cfg-note" placeholder="Catatan untuk pelanggan" oninput="previewStore()">
             </div>
             <div style="margin-bottom:14px">
               <label class="fld" style="display:block;margin-bottom:6px">Banner Berjalan (pisah dengan | )</label>
@@ -1861,7 +1851,7 @@ window.resetAllKarbol = async () => {
         <label class="fld">Paket</label>
         <select class="fin" id="a-paket" onchange="updAddTotal()" style="appearance:auto;cursor:pointer">
           <option value="">— Pilih Paket —</option>
-          <option value="Paket 1|22500|Sabun Cuci Piring,Deterjen,Karbol">Paket 1 — Rp22.500</option>
+          <option value="Paket 1|22500|Sabun Cuci Piring,Deterjen,Parfume">Paket 1 — Rp22.500</option>
           <option value="Paket 2A|24000|Parfume,Parfume">Paket 2A — Rp24.000</option>
           <option value="Paket 2B|22000|Parfume,Handsoap 3">Paket 2B — Rp22.000</option>
           <option value="Satuan|0|">Satuan (manual)</option>
@@ -1937,7 +1927,7 @@ window.resetAllKarbol = async () => {
       <div style="margin-bottom:11px"><label class="fld">Nama Paket</label><input class="fin" type="text" id="pk-name" placeholder="Paket 1"></div>
       <div style="margin-bottom:11px"><label class="fld">Deskripsi</label><input class="fin" type="text" id="pk-desc" placeholder="Kombinasi 3 produk pilihan"></div>
       <div style="margin-bottom:11px"><label class="fld">Harga Paket (Rp)</label><input class="fin" type="number" id="pk-price" placeholder="22500" oninput="document.getElementById('pk-prev').textContent='Rp'+(parseInt(this.value)||0).toLocaleString('id-ID')"></div>
-      <div style="margin-bottom:13px"><label class="fld">Isi Produk (pisah koma)</label><input class="fin" type="text" id="pk-items" placeholder="Sabun Cuci Piring,Deterjen,Karbol"></div>
+      <div style="margin-bottom:13px"><label class="fld">Isi Produk (pisah koma)</label><input class="fin" type="text" id="pk-items" placeholder="Sabun Cuci Piring,Deterjen,Parfume"></div>
       <div class="mtot-box" style="margin-bottom:13px"><span class="mtot-lbl">Harga</span><span class="mtot-val" id="pk-prev">Rp0</span></div>
       <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="savePaket()">&#x2705; Simpan Paket</button>
     </div>
@@ -1957,6 +1947,31 @@ window.resetAllKarbol = async () => {
   </div>
 </div>
 
+<!-- LOADING SPLASH -->
+<div id="splash">
+  <div class="sp-logo">🧴</div>
+  <div class="sp-title">Unit Produksi</div>
+  <div class="sp-sub">Memuat aplikasi...</div>
+  <div class="sp-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- BOTTOM NAV — direct child of body -->
+<nav id="bottom-nav">
+  <button class="bnav-btn on" id="bnav-order" onclick="switchTab('order',this)">
+    <span class="bnav-ico">🛒</span>
+    <span class="bnav-lbl">Pesan</span>
+  </button>
+  <button class="bnav-btn" id="bnav-myorders" onclick="switchTab('myorders',this)">
+    <span class="bnav-ico">📋</span>
+    <span class="bnav-lbl">Pesanan</span>
+    <span class="bnav-badge" id="bnav-badge"></span>
+  </button>
+  <button class="bnav-btn" id="bnav-profil" onclick="switchTab('profil',this)">
+    <span class="bnav-ico">👤</span>
+    <span class="bnav-lbl">Profil</span>
+  </button>
+</nav>
+
 <div id="toast"></div>
 
 <!-- ══════════════════ FIREBASE + LOGIC ══════════════════ -->
@@ -1969,12 +1984,13 @@ import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs,
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey:            "AIzaSyCcphbtZ5T3nN0EKGOWG-BLvGhslIHKsg8",
-  authDomain:        "minzy-store.firebaseapp.com",
-  projectId:         "minzy-store",
-  storageBucket:     "minzy-store.firebasestorage.app",
-  messagingSenderId: "410168036268",
-  appId:             "1:410168036268:web:d7d1d0d79688c907e84809"
+  apiKey:            "AIzaSyCKnfRNco9U8ccMMKZ8h73SMxf2xri1itw",
+  authDomain:        "mifta-99491.firebaseapp.com",
+  projectId:         "mifta-99491",
+  storageBucket:     "mifta-99491.firebasestorage.app",
+  messagingSenderId: "426086942563",
+  appId:             "1:426086942563:web:b70700bb03d0a05153f556",
+  measurementId:     "G-MJ3SXW51PZ"
 };
 
 const app  = initializeApp(firebaseConfig);
@@ -1985,11 +2001,11 @@ window._fb = {updateDoc,doc,getDocs,collection,query,orderBy,onSnapshot,addDoc,s
 /* ─── CONSTANTS (default fallback) ─── */
 let PRODS = [
   {key:'Sabun Cuci Piring',price:7500},{key:'Deterjen',price:7500},
-  {key:'Karbol',price:7500},{key:'Parfume',price:12000},
+  {key:'Parfume',price:12000},
   {key:'Handsoap 2',price:7000},{key:'Handsoap 3',price:10000},{key:'VCO 125ml',price:32500},
 ];
 let PAKETS = [
-  {id:'paket1',name:'Paket 1',desc:'Kombinasi 3 produk: cupir, deterjen, atau karbol',price:22500,items:['Sabun Cuci Piring','Deterjen','Karbol'],type:'pilih3'},
+  {id:'paket1',name:'Paket 1',desc:'Kombinasi 3 produk pilihan',price:22500,items:['Sabun Cuci Piring','Deterjen','Parfume'],type:'pilih3'},
   {id:'paket2a',name:'Paket 2A',desc:'Parfume + Parfume (2 botol)',price:24000,items:['Parfume','Parfume'],type:'fixed'},
   {id:'paket2b',name:'Paket 2B',desc:'Parfume + Handsoap 3',price:22000,items:['Parfume','Handsoap 3'],type:'fixed'},
 ];
@@ -2005,13 +2021,13 @@ let editProdId=null, editPaketId=null;
 
 /* ─── AUTH STATE ─── */
 onAuthStateChanged(auth, async u => {
+  try {
   if (u) {
     curUser = u;
     const snap = await getDoc(doc(db,'users',u.uid));
     if (!snap.exists()) { await signOut(auth); return; }
     const data = snap.data();
     curRole = data.role;
-    // Block check
     if(data.blocked && curRole!=='admin'){
       await signOut(auth);
       toast('🚫 Akun kamu telah diblokir. Hubungi admin.');
@@ -2043,6 +2059,10 @@ onAuthStateChanged(auth, async u => {
     if(unsubT){unsubT();unsubT=null;}
     if(unsubUsers){unsubUsers();unsubUsers=null;}
     if(unsubNotif){unsubNotif();unsubNotif=null;}
+    showView('login');
+  }
+  } catch(err) {
+    console.error('Auth error:', err);
     showView('login');
   }
 });
@@ -2183,8 +2203,10 @@ function startNotifListener(uid){
     // Badge di tab
     const unread = notifs.filter(o=>!o.notifRead).length;
     const badge = document.getElementById('my-order-badge');
+    const bnavBadge = document.getElementById('bnav-badge');
     const profBtn = document.getElementById('stab-btn-profil');
     if(badge){ badge.style.display=unread>0?'inline':'none'; badge.textContent=unread; }
+    if(bnavBadge){ bnavBadge.classList.toggle('on',unread>0); bnavBadge.textContent=unread>0?unread:''; }
     if(profBtn){
       let nb = profBtn.querySelector('.notif-nb');
       if(unread>0){
@@ -2280,13 +2302,6 @@ function buildProdList(){
   }).join('');
 }
 window.chQ=async(key,d)=>{
-  if(key==='Karbol'&&d>0){
-    const us=await getDoc(doc(db,'users',curUser.uid));
-    const kelas=us.data()?.kelas||'?';
-    const ks=await getDoc(doc(db,'karbol',kelas));
-    const used=(ks.exists()?ks.data().count:0)+(satuanQty['Karbol']||0);
-    if(used>=8){const w=document.getElementById('warn-karbol');if(w){w.style.display='flex';setTimeout(()=>w.style.display='none',3000);}return;}
-  }
   satuanQty[key]=Math.max(0,(satuanQty[key]||0)+d);
   const id=key.replace(/\s/g,'-');
   const qv=document.getElementById('qv-'+id);if(qv)qv.textContent=satuanQty[key];
@@ -2339,8 +2354,6 @@ window.submitOrder=async()=>{
     paket='Satuan';total=updTotal();if(total<20000){toast('⚠️ Minimum Rp20.000');return;}
   }
   if(!items.length){toast('⚠️ Pilih minimal 1 produk');return;}
-  const kbC=items.filter(i=>i==='Karbol').length;
-  if(kbC>0){const ks=await getDoc(doc(db,'karbol',kelas));const used=ks.exists()?ks.data().count:0;if(used+kbC>8){toast('⚠️ Batas karbol penuh!');return;}await setDoc(doc(db,'karbol',kelas),{count:used+kbC},{merge:true});}
   btn.disabled=true;btn.textContent='Menyimpan...';
   try{
     await addDoc(collection(db,'orders'),{userId:curUser.uid,name,kelas,paket,items,total,status:'pending',createdAt:serverTimestamp(),date:fmtDate(Date.now())});
@@ -2525,7 +2538,7 @@ function startListeners(){
   // Load produk & paket from Firestore
   loadProdsFromDB();
   loadPaketsFromDB();
-  loadKarbolData();
+  
 }
 
 async function loadProdsFromDB(){
@@ -2897,7 +2910,7 @@ let storeSettings = {
   storeName: 'Unit Produksi',
   tagline: 'PRODUK KELAS',
   heroSub: 'Produk kebutuhan rumah tangga. Untuk acc ujian atau jual kembali.',
-  note: 'Karbol dibatasi 8 produk per kelas',
+  note: '',
   banner: '🧴 Selamat datang di Unit Produksi! | 🛒 Pilih paket favoritmu sekarang | ✅ Produk berkualitas, harga terjangkau | 🔥 Tersedia Paket 1, 2A, 2B dan Satuan'
 };
 
@@ -3101,7 +3114,7 @@ function rebuildAddPaketOptions(){
 
 /* ══════════════════════════════════════
    ADMIN POWER FEATURES
-   ── Laporan, Chart, Karbol, Export, Print
+   ── Laporan, Chart, Export, Print
 ══════════════════════════════════════ */
 
 /* ─── LAPORAN STATE ─── */
@@ -3440,89 +3453,15 @@ window.printStruk = (id) => {
   window.print();
 };
 
-/* ─── KARBOL MANAGEMENT ─── */
-async function loadKarbolData() {
-  try {
-    const snap = await getDoc(doc(db,'settings','karbol'));
-    if (snap.exists()) {
-      const data = snap.data();
-      karbolLimit = data.limit || 8;
-      const inp = document.getElementById('karbol-limit-input');
-      if (inp) inp.value = karbolLimit;
-      set('karbol-limit-disp', karbolLimit);
-    }
-  } catch(e){}
-  renderKarbolGrid();
-}
+/* ─── (removed) ─── */
 
-function renderKarbolGrid() {
-  const grid = document.getElementById('karbol-grid'); if(!grid) return;
-  // Count karbol per kelas from orders
-  const kelasMap = {};
-  allOrders.forEach(o => {
-    if (!o.kelas) return;
-    if (!kelasMap[o.kelas]) kelasMap[o.kelas] = 0;
-    o.items?.forEach(it => { if(it.toLowerCase().includes('karbol')) kelasMap[o.kelas]++; });
-  });
+function renderKarbolGrid(){}
 
-  // Get all unique classes
-  const classes = [...new Set([
-    ...allUsers.map(u=>u.kelas),
-    ...Object.keys(kelasMap)
-  ].filter(Boolean))].sort();
+window.saveKarbolLimit=async()=>{};
 
-  if (!classes.length) {
-    grid.innerHTML = '<div style="color:var(--dt3);font-size:.78rem;padding:8px">Belum ada data kelas. Daftarkan member dulu.</div>';
-    return;
-  }
+window.setKarbolKelas=async()=>{};
 
-  grid.innerHTML = classes.map(kelas => {
-    const count = kelasMap[kelas] || 0;
-    const pct   = Math.min(100, Math.round((count/karbolLimit)*100));
-    const barClass = pct >= 100 ? 'full' : pct >= 75 ? 'warn' : '';
-    const isFull   = count >= karbolLimit;
-    return `<div class="karbol-card">
-      <div class="karbol-kelas">${kelas}</div>
-      <div class="karbol-progress">
-        <div class="karbol-bar ${barClass}" style="width:${pct}%"></div>
-      </div>
-      <div class="karbol-info">
-        <span class="karbol-count" style="color:${isFull?'#f87171':'inherit'}">${count}/${karbolLimit} ${isFull?'🚫':''}</span>
-        <span class="karbol-pct">${pct}%</span>
-      </div>
-      <div class="karbol-actions">
-        <input type="number" class="karbol-adj" id="k-adj-${kelas}" value="${count}" min="0" max="${karbolLimit+10}" title="Override jumlah karbol">
-        <button class="btn btn-g btn-sm" onclick="setKarbolKelas('${kelas}')">Set</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-window.saveKarbolLimit = async () => {
-  const val = parseInt(document.getElementById('karbol-limit-input')?.value)||8;
-  karbolLimit = val;
-  await setDoc(doc(db,'settings','karbol'), { limit: val });
-  set('karbol-limit-disp', val);
-  renderKarbolGrid();
-  toast('✅ Batas karbol disimpan: '+val+' per kelas');
-};
-
-window.setKarbolKelas = async (kelas) => {
-  const val = parseInt(document.getElementById('k-adj-'+kelas)?.value)||0;
-  await setDoc(doc(db,'karbol',kelas), { count: val, updatedAt: serverTimestamp() });
-  toast('✅ Karbol '+kelas+' diset ke '+val);
-  renderKarbolGrid();
-};
-
-window.resetAllKarbol = async () => {
-  if(!confirm('Reset semua data karbol ke 0?')) return;
-  const classes = [...new Set(allUsers.map(u=>u.kelas).filter(Boolean))];
-  for(const k of classes){
-    await setDoc(doc(db,'karbol',k),{count:0,updatedAt:serverTimestamp()});
-  }
-  toast('🔄 Semua karbol direset!');
-  renderKarbolGrid();
-};
+window.resetAllKarbol=async()=>{};
 
 
 /* ─── USER MANAGEMENT ─── */
@@ -3775,7 +3714,7 @@ window.showATabDrawer=(tab,el)=>{
   if(tab==='dashboard')renderDash();
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
-  else if(tab==='produk'){renderProduk();loadKarbolData();}
+  else if(tab==='produk'){renderProduk();}
   else if(tab==='users'){startUsersListener();renderUsers();}
   else if(tab==='laporan'){renderLaporan();}
   window.scrollTo({top:0,behavior:'smooth'});
@@ -3789,25 +3728,52 @@ window.showATab=(tab,el)=>{
   if(tab==='dashboard')renderDash();
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
-  else if(tab==='produk'){renderProduk();loadKarbolData();}
+  else if(tab==='produk'){renderProduk();}
   else if(tab==='users'){startUsersListener();renderUsers();}
   else if(tab==='laporan'){renderLaporan();}
 };
 
 /* ─── VIEW + STORE TAB ─── */
+function dismissSplash(){
+  const s=document.getElementById('splash');
+  if(s&&!s.classList.contains('out')){s.classList.add('out');setTimeout(()=>{if(s)s.style.display='none';},350);}
+}
 window.showView=v=>{
+  if(typeof _splashTimer!=='undefined') clearTimeout(_splashTimer);
+  dismissSplash();
   document.getElementById('v-login').classList.toggle('on',v==='login');
   document.getElementById('v-store').classList.toggle('on',v==='store');
   document.getElementById('v-admin').classList.toggle('on',v==='admin');
+  const bn=document.getElementById('bottom-nav');
+  if(bn) bn.classList.toggle('show',v==='store');
 };
+// Safety fallback — show login after 4s no matter what
+const _splashTimer = setTimeout(()=>{
+  const s=document.getElementById('splash');
+  if(s && !s.classList.contains('out')){ showView('login'); }
+}, 4000);
 window.showStoreTab=(tab,el)=>{
   document.getElementById('stab-order').style.display=tab==='order'?'block':'none';
   document.getElementById('stab-myorders').style.display=tab==='myorders'?'block':'none';
   document.getElementById('stab-profil').style.display=tab==='profil'?'block':'none';
   document.querySelectorAll('.s-tabbt').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
+  // sync bottom nav
+  ['order','myorders','profil'].forEach(t=>{
+    const b=document.getElementById('bnav-'+t);
+    if(b)b.classList.toggle('on',t===tab);
+  });
   if(tab==='profil') renderProfilTab();
+  window.scrollTo({top:0,behavior:'smooth'});
 };
+window.switchTab=(tab,bnavEl)=>{
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('on'));
+  if(bnavEl)bnavEl.classList.add('on');
+  showStoreTab(tab, document.getElementById('stab-btn-'+tab));
+};
+// safety timer cleared when auth resolves
+
+
 window.showLTab=(tab,el)=>{
   document.getElementById('lp-login').style.display=tab==='login'?'block':'none';
   document.getElementById('lp-register').style.display=tab==='register'?'block':'none';
