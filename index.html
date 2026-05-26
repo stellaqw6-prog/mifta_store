@@ -205,7 +205,159 @@ body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);mi
 .s-tabbar,.s-tabbar-inner,.s-tabbt{display:none!important;}
 .sh-kelas{display:none;}
 
+
+/* ═══ VISITOR & MEMBER STATS ═══ */
+.stat-live-row{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:14px;}
+.stat-live-card{background:var(--dark2);border:1px solid var(--dark4);border-radius:13px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s;}
+.stat-live-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slc,var(--dark5));border-radius:0 0 13px 13px;}
+.stat-live-card.vis {--slc:#4a9eff;}
+.stat-live-card.mem {--slc:var(--neon4);}
+.stat-live-card.adm {--slc:var(--neon);}
+.stat-live-card.onl {--slc:var(--neon2);}
+.stat-live-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.stat-live-ico{font-size:1.1rem;opacity:.6;}
+.stat-live-badge{display:flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:9px;}
+.stat-live-badge.live{background:rgba(0,201,122,.12);color:var(--neon2);}
+.stat-live-badge.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon2);animation:pulse 1.4s infinite;}
+.stat-live-lbl{font-size:.62rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.stat-live-val{font-family:'DM Serif Display',serif;font-size:2.1rem;color:var(--dt);line-height:1;}
+.stat-live-val.blue{color:#4a9eff;}
+.stat-live-val.green{color:var(--neon4);}
+.stat-live-val.purple{color:var(--neon);}
+.stat-live-val.teal{color:var(--neon2);}
+.stat-live-sub{font-size:.66rem;color:var(--dt3);margin-top:5px;line-height:1.4;}
+/* Online dot animation */
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+/* Visitor chart mini */
+.vis-chart-wrap{background:var(--dark2);border:1px solid var(--dark4);border-radius:13px;padding:15px 17px;margin-bottom:14px;}
+.vis-chart-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.vis-chart-title{font-size:.82rem;font-weight:700;color:var(--dt);}
+.vis-chart-sub{font-size:.67rem;color:var(--dt3);}
+.vis-bars{display:flex;align-items:flex-end;gap:4px;height:70px;}
+.vis-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.vis-bar{width:100%;border-radius:3px 3px 0 0;background:rgba(74,158,255,.25);min-height:3px;transition:height .4s;}
+.vis-bar.today{background:rgba(74,158,255,.7);}
+.vis-bar-lbl{font-size:.52rem;color:var(--dt3);text-align:center;}
+/* Member breakdown */
+.mem-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px;}
+.mem-bk-row{background:var(--dark4);border-radius:9px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;}
+.mem-bk-lbl{font-size:.73rem;color:var(--dt2);}
+.mem-bk-val{font-size:1rem;font-weight:800;color:var(--dt);}
+@media(max-width:680px){.stat-live-row{grid-template-columns:1fr 1fr;}.stat-live-row .stat-live-card:last-child{grid-column:1/-1;}}
+
+
+/* ═══ STOCK & PRE-ORDER SYSTEM ═══ */
+/* Product row states */
+.pr.out-of-stock{opacity:.65;background:rgba(120,30,10,.07);border-color:rgba(180,60,20,.25);}
+.pr.po-mode{background:rgba(74,158,255,.07);border-color:rgba(74,158,255,.3);}
+.stock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:9px;margin-left:5px;vertical-align:middle;}
+.stock-badge.ok {background:rgba(0,201,122,.12);color:#00c97a;}
+.stock-badge.low{background:rgba(255,180,0,.12);color:#f0b000;}
+.stock-badge.out{background:rgba(240,80,80,.12);color:#f05050;}
+.stock-badge.po {background:rgba(74,158,255,.12);color:#4a9eff;}
+/* PO button in prod row */
+.po-btn{padding:5px 12px;border-radius:7px;border:1.5px solid rgba(74,158,255,.4);background:rgba(74,158,255,.1);color:#4a9eff;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:.15s;white-space:nowrap;}
+.po-btn:hover{background:rgba(74,158,255,.2);}
+/* PO Form modal */
+.po-form-box{background:rgba(74,158,255,.07);border:1.5px solid rgba(74,158,255,.25);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.po-form-title{font-size:.78rem;font-weight:800;color:#4a9eff;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+/* PO list item in store */
+.po-item-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:rgba(74,158,255,.07);border:1px solid rgba(74,158,255,.2);border-radius:9px;margin-bottom:6px;}
+.po-item-ico{font-size:1.1rem;flex-shrink:0;}
+.po-item-info{flex:1;min-width:0;}
+.po-item-name{font-size:.8rem;font-weight:700;color:var(--ink);}
+.po-item-sub{font-size:.68rem;color:var(--ink3);margin-top:1px;}
+.po-item-status{font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:8px;}
+.po-item-status.wait{background:rgba(240,176,0,.12);color:#f0b000;}
+.po-item-status.ready{background:rgba(0,201,122,.12);color:#00c97a;}
+/* Admin stock input in produk table */
+.stock-inp{width:68px;padding:5px 8px;background:var(--dark4);border:1.5px solid var(--dark5);border-radius:7px;color:var(--dt);font-size:.78rem;font-family:'Outfit',sans-serif;outline:none;text-align:center;}
+.stock-inp:focus{border-color:rgba(124,106,245,.4);}
+/* PO admin panel */
+.po-admin-row{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;margin-bottom:8px;}
+.po-admin-info{flex:1;}
+.po-admin-name{font-size:.82rem;font-weight:700;color:var(--dt);}
+.po-admin-sub{font-size:.7rem;color:var(--dt3);margin-top:3px;line-height:1.5;}
+.po-admin-acts{display:flex;gap:6px;flex-shrink:0;flex-direction:column;}
+.notif-sent-badge{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px;background:rgba(0,201,122,.12);color:#00c97a;}
+
 /* ═══ IMAGE BENER (SLIDESHOW) ═══ */
+
+/* ═══ VISITOR & MEMBER STATS ═══ */
+.stat-live-row{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:14px;}
+.stat-live-card{background:var(--dark2);border:1px solid var(--dark4);border-radius:13px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s;}
+.stat-live-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--slc,var(--dark5));border-radius:0 0 13px 13px;}
+.stat-live-card.vis {--slc:#4a9eff;}
+.stat-live-card.mem {--slc:var(--neon4);}
+.stat-live-card.adm {--slc:var(--neon);}
+.stat-live-card.onl {--slc:var(--neon2);}
+.stat-live-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.stat-live-ico{font-size:1.1rem;opacity:.6;}
+.stat-live-badge{display:flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:9px;}
+.stat-live-badge.live{background:rgba(0,201,122,.12);color:var(--neon2);}
+.stat-live-badge.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon2);animation:pulse 1.4s infinite;}
+.stat-live-lbl{font-size:.62rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.stat-live-val{font-family:'DM Serif Display',serif;font-size:2.1rem;color:var(--dt);line-height:1;}
+.stat-live-val.blue{color:#4a9eff;}
+.stat-live-val.green{color:var(--neon4);}
+.stat-live-val.purple{color:var(--neon);}
+.stat-live-val.teal{color:var(--neon2);}
+.stat-live-sub{font-size:.66rem;color:var(--dt3);margin-top:5px;line-height:1.4;}
+/* Online dot animation */
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+/* Visitor chart mini */
+.vis-chart-wrap{background:var(--dark2);border:1px solid var(--dark4);border-radius:13px;padding:15px 17px;margin-bottom:14px;}
+.vis-chart-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.vis-chart-title{font-size:.82rem;font-weight:700;color:var(--dt);}
+.vis-chart-sub{font-size:.67rem;color:var(--dt3);}
+.vis-bars{display:flex;align-items:flex-end;gap:4px;height:70px;}
+.vis-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.vis-bar{width:100%;border-radius:3px 3px 0 0;background:rgba(74,158,255,.25);min-height:3px;transition:height .4s;}
+.vis-bar.today{background:rgba(74,158,255,.7);}
+.vis-bar-lbl{font-size:.52rem;color:var(--dt3);text-align:center;}
+/* Member breakdown */
+.mem-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px;}
+.mem-bk-row{background:var(--dark4);border-radius:9px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;}
+.mem-bk-lbl{font-size:.73rem;color:var(--dt2);}
+.mem-bk-val{font-size:1rem;font-weight:800;color:var(--dt);}
+@media(max-width:680px){.stat-live-row{grid-template-columns:1fr 1fr;}.stat-live-row .stat-live-card:last-child{grid-column:1/-1;}}
+
+
+/* ═══ STOCK & PRE-ORDER SYSTEM ═══ */
+/* Product row states */
+.pr.out-of-stock{opacity:.65;background:rgba(120,30,10,.07);border-color:rgba(180,60,20,.25);}
+.pr.po-mode{background:rgba(74,158,255,.07);border-color:rgba(74,158,255,.3);}
+.stock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:9px;margin-left:5px;vertical-align:middle;}
+.stock-badge.ok {background:rgba(0,201,122,.12);color:#00c97a;}
+.stock-badge.low{background:rgba(255,180,0,.12);color:#f0b000;}
+.stock-badge.out{background:rgba(240,80,80,.12);color:#f05050;}
+.stock-badge.po {background:rgba(74,158,255,.12);color:#4a9eff;}
+/* PO button in prod row */
+.po-btn{padding:5px 12px;border-radius:7px;border:1.5px solid rgba(74,158,255,.4);background:rgba(74,158,255,.1);color:#4a9eff;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:.15s;white-space:nowrap;}
+.po-btn:hover{background:rgba(74,158,255,.2);}
+/* PO Form modal */
+.po-form-box{background:rgba(74,158,255,.07);border:1.5px solid rgba(74,158,255,.25);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.po-form-title{font-size:.78rem;font-weight:800;color:#4a9eff;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+/* PO list item in store */
+.po-item-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:rgba(74,158,255,.07);border:1px solid rgba(74,158,255,.2);border-radius:9px;margin-bottom:6px;}
+.po-item-ico{font-size:1.1rem;flex-shrink:0;}
+.po-item-info{flex:1;min-width:0;}
+.po-item-name{font-size:.8rem;font-weight:700;color:var(--ink);}
+.po-item-sub{font-size:.68rem;color:var(--ink3);margin-top:1px;}
+.po-item-status{font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:8px;}
+.po-item-status.wait{background:rgba(240,176,0,.12);color:#f0b000;}
+.po-item-status.ready{background:rgba(0,201,122,.12);color:#00c97a;}
+/* Admin stock input in produk table */
+.stock-inp{width:68px;padding:5px 8px;background:var(--dark4);border:1.5px solid var(--dark5);border-radius:7px;color:var(--dt);font-size:.78rem;font-family:'Outfit',sans-serif;outline:none;text-align:center;}
+.stock-inp:focus{border-color:rgba(124,106,245,.4);}
+/* PO admin panel */
+.po-admin-row{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;margin-bottom:8px;}
+.po-admin-info{flex:1;}
+.po-admin-name{font-size:.82rem;font-weight:700;color:var(--dt);}
+.po-admin-sub{font-size:.7rem;color:var(--dt3);margin-top:3px;line-height:1.5;}
+.po-admin-acts{display:flex;gap:6px;flex-shrink:0;flex-direction:column;}
+.notif-sent-badge{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px;background:rgba(0,201,122,.12);color:#00c97a;}
+
 /* ═══ IMAGE BENER (SLIDESHOW) ═══ */
 .bener-wrap{position:relative;width:100%;overflow:hidden;background:#0a0604;border-radius:0;margin-bottom:0;}
 .bener-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);}
@@ -1431,6 +1583,14 @@ window.resetAllKarbol=async()=>{};
 
     <!-- TAB PROFIL -->
     <div id="stab-profil" style="display:none">
+      <!-- MY PRE-ORDERS -->
+      <div class="sc" id="my-po-card" style="display:none">
+        <div class="sc-hd"><span class="sc-icon">🔖</span><span class="sc-title">Pre-Order Saya</span><span class="sc-sub" id="my-po-count">0 item</span></div>
+        <div class="sc-body" id="my-po-list">
+          <div style="text-align:center;padding:10px;color:var(--ink3);font-size:.78rem">Belum ada pre-order</div>
+        </div>
+      </div>
+
       <div class="sc" id="notif-card" style="display:none">
         <div class="sc-hd"><span class="sc-icon">🔔</span><span class="sc-title">Notifikasi Terbaru</span><span class="sc-sub" id="notif-count-lbl"></span></div>
         <div id="notif-list" style="padding:0 4px 4px"></div>
@@ -1532,6 +1692,60 @@ window.resetAllKarbol=async()=>{};
           <div><div class="phd-title">Selamat Datang 👋</div><div class="phd-sub">Ringkasan aktivitas unit produksi secara real-time</div></div>
           <div class="phd-acts"><button class="btn btn-p" onclick="openAddModal()">+ Pesanan</button></div>
         </div>
+        <!-- REAL-TIME VISITOR & MEMBER STATS -->
+        <div class="stat-live-row">
+          <div class="stat-live-card vis">
+            <div class="stat-live-hd">
+              <span class="stat-live-ico">👁️</span>
+              <span class="stat-live-badge live">LIVE</span>
+            </div>
+            <div class="stat-live-lbl">Pengunjung Hari Ini</div>
+            <div class="stat-live-val blue" id="stat-vis-today">—</div>
+            <div class="stat-live-sub" id="stat-vis-sub">Memuat...</div>
+          </div>
+          <div class="stat-live-card mem">
+            <div class="stat-live-hd">
+              <span class="stat-live-ico">👥</span>
+              <span class="stat-live-badge live">LIVE</span>
+            </div>
+            <div class="stat-live-lbl">Total Member</div>
+            <div class="stat-live-val green" id="stat-members">—</div>
+            <div class="stat-live-sub" id="stat-mem-sub">Memuat...</div>
+          </div>
+          <div class="stat-live-card adm">
+            <div class="stat-live-hd">
+              <span class="stat-live-ico">🛡️</span>
+              <span class="stat-live-badge live">LIVE</span>
+            </div>
+            <div class="stat-live-lbl">Admin Terdaftar</div>
+            <div class="stat-live-val purple" id="stat-admins">—</div>
+            <div class="stat-live-sub" id="stat-adm-sub">Memuat...</div>
+          </div>
+        </div>
+
+        <!-- Visitor chart + Member breakdown -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px">
+          <div class="vis-chart-wrap">
+            <div class="vis-chart-hd">
+              <span class="vis-chart-title">📈 Kunjungan 7 Hari</span>
+              <span class="vis-chart-sub" id="vis-total-week">—</span>
+            </div>
+            <div class="vis-bars" id="vis-bars-el"></div>
+          </div>
+          <div class="vis-chart-wrap">
+            <div class="vis-chart-hd">
+              <span class="vis-chart-title">👥 Komposisi Akun</span>
+              <span class="stat-live-badge live" style="font-size:.6rem">LIVE</span>
+            </div>
+            <div class="mem-breakdown">
+              <div class="mem-bk-row"><span class="mem-bk-lbl">👤 User</span><span class="mem-bk-val green" id="stat-users">—</span></div>
+              <div class="mem-bk-row"><span class="mem-bk-lbl">🛡️ Admin</span><span class="mem-bk-val purple" id="stat-admins2">—</span></div>
+              <div class="mem-bk-row"><span class="mem-bk-lbl">🔒 Diblokir</span><span class="mem-bk-val" style="color:#f05050" id="stat-blocked">—</span></div>
+              <div class="mem-bk-row"><span class="mem-bk-lbl">📅 Baru hari ini</span><span class="mem-bk-val teal" id="stat-new-today">—</span></div>
+            </div>
+          </div>
+        </div>
+
         <div class="srow">
           <div class="scard green"><div class="scard-ico">📦</div><div class="scard-lbl">Total Pesanan</div><div class="scard-val" id="d-total">0</div><div class="scard-sub" id="d-tsub">—</div></div>
           <div class="scard amber"><div class="scard-ico">⏳</div><div class="scard-lbl">Pending</div><div class="scard-val amber" id="d-pending">0</div><div class="scard-sub">menunggu bayar</div></div>
@@ -1840,6 +2054,17 @@ window.resetAllKarbol=async()=>{};
         <div id="print-area" style="display:none"></div>
       </div>
 
+
+      <!-- PRE-ORDER MANAGEMENT -->
+      <div id="ap-po-admin" class="panel" style="margin-top:0;margin-bottom:14px;display:none">
+        <div class="panel-hd" style="display:flex;justify-content:space-between;align-items:center">
+          <span class="panel-title">📋 Daftar Pre-Order</span>
+          <span class="rpill" id="po-admin-count">0 PO</span>
+        </div>
+        <div class="panel-body" id="po-admin-list" style="padding:12px 14px">
+          <div style="text-align:center;padding:14px;color:var(--dt3);font-size:.78rem">Belum ada pre-order</div>
+        </div>
+      </div>
 
       <!-- PAYMENT SETTINGS -->
       <div id="ap-payment" class="ap">
@@ -2180,7 +2405,12 @@ window.resetAllKarbol=async()=>{};
     <div class="mhd"><div><div class="m-title" id="addprod-title">Produk Baru</div><div class="m-sub">Tambah produk satuan ke toko</div></div><button class="mx" onclick="closeAddProd()">&#x2715;</button></div>
     <div class="mbody">
       <div style="margin-bottom:11px"><label class="fld">Nama Produk</label><input class="fin" type="text" id="ap-name" placeholder="Sabun Cuci Piring"></div>
-      <div style="margin-bottom:13px"><label class="fld">Harga Jual (Rp)</label><input class="fin" type="number" id="ap-price" placeholder="7500"></div>
+      <div style="margin-bottom:11px"><label class="fld">Harga Jual (Rp)</label><input class="fin" type="number" id="ap-price" placeholder="7500"></div>
+      <div style="margin-bottom:13px">
+        <label class="fld">Stok Tersedia</label>
+        <input class="fin" type="number" id="ap-stock" placeholder="0 = habis / PO" min="0" style="margin-top:5px">
+        <div style="font-size:.65rem;color:var(--dt3);margin-top:4px">0 = habis stok, pembeli akan masuk Pre-Order. Kosongkan = unlimited.</div>
+      </div>
       <div class="mtot-box" style="margin-bottom:13px"><span class="mtot-lbl">Preview Harga</span><span class="mtot-val" id="ap-prev">Rp0</span></div>
       <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="saveProd()">&#x2705; Simpan Produk</button>
     </div>
@@ -2292,6 +2522,7 @@ onAuthStateChanged(auth, async u => {
   try {
   if (u) {
     curUser = u;
+    trackVisit();
     let snap;
     try{ snap = await getDoc(doc(db,'users',u.uid)); }
     catch(dbErr){
@@ -2333,6 +2564,9 @@ onAuthStateChanged(auth, async u => {
       loadStoreSettings();
       loadPaymentSettings();
       loadBenerSettings();
+      startMemberStatsListener();
+      startVisitorLiveRefresh();
+      startPOAdminListener();
     } else {
       showView('store');
       set('st-name', data.name||u.email);
@@ -2345,6 +2579,7 @@ onAuthStateChanged(auth, async u => {
       loadPaymentSettings();
       loadBenerSettings();
       listenMyOrders(u.uid);
+      listenMyPO(u.uid);
       startNotifListener(u.uid);
     }
   } else {
@@ -2614,12 +2849,50 @@ function fErr(c){return({
 }[c])||('Login gagal: '+(c||'error tidak diketahui'));}
 
 /* ─── STORE ─── */
+
+/* ═══════════════════════════
+   STOCK & PRE-ORDER SYSTEM
+═══════════════════════════ */
+let _unsubPO = null;
+
+/* ── Stok helper ── */
+function getStock(prodKey){
+  const p = PRODS.find(x=>x.key===prodKey);
+  if(!p) return null;
+  if(p.stock===undefined || p.stock===null || p.stock==='') return null; // unlimited
+  return parseInt(p.stock)||0;
+}
+function isOutOfStock(prodKey){
+  const s = getStock(prodKey);
+  return s !== null && s <= 0;
+}
+function stockLabel(prodKey){
+  const s = getStock(prodKey);
+  if(s===null) return null; // unlimited - no badge
+  if(s===0) return {cls:'out', txt:'Habis'};
+  if(s<=5) return {cls:'low', txt:'Sisa '+s};
+  return {cls:'ok', txt:'Stok '+s};
+}
+
+/* ── Update buildProdList to show stock ── */
 function buildProdList(){
   const el=document.getElementById('prod-list');if(!el)return;
   el.innerHTML=PRODS.map(p=>{
-    const q=satuanQty[p.key]||0,id=p.key.replace(/\s/g,'-');
+    const q=satuanQty[p.key]||0;
+    const id=p.key.replace(/\s/g,'-');
+    const oos = isOutOfStock(p.key);
+    const sl = stockLabel(p.key);
+    const badge = sl ? `<span class="stock-badge ${sl.cls}">${sl.txt}</span>` : '';
+    if(oos){
+      // Out of stock → show PO button instead of qty control
+      return`<div class="pr out-of-stock" id="pr-${id}">
+        <span class="pr-name">${p.key}${badge}</span>
+        <span class="pr-price">Rp${p.price.toLocaleString('id-ID')}</span>
+        <button class="po-btn" onclick="openPOForm('${p.key}',${p.price})">🔖 Pre-Order</button>
+      </div>`;
+    }
     return`<div class="pr${q>0?' hq':''}" id="pr-${id}">
-      <span class="pr-name">${p.key}</span>
+      <span class="pr-name">${p.key}${badge}</span>
       <span class="pr-price">Rp${p.price.toLocaleString('id-ID')}</span>
       <div class="qc">
         <button class="qb" onclick="chQ('${p.key}',-1)">−</button>
@@ -2628,6 +2901,184 @@ function buildProdList(){
       </div></div>`;
   }).join('');
 }
+
+/* ── PO Form ── */
+let _poTarget = null;
+window.openPOForm = (prodKey, prodPrice) => {
+  _poTarget = {key:prodKey, price:prodPrice};
+  // Show PO modal
+  let ov = document.getElementById('ov-po-form');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.className='overlay';
+    ov.id='ov-po-form';
+    ov.onclick=(e)=>{ if(e.target===ov) closePOForm(); };
+    ov.innerHTML=`
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:380px">
+        <div class="mhd">
+          <div><div class="m-title" id="po-modal-title">Pre-Order</div><div class="m-sub">Stok sedang kosong — daftarkan pre-order</div></div>
+          <button class="mx" onclick="closePOForm()">&#x2715;</button>
+        </div>
+        <div class="mbody">
+          <div class="po-form-box">
+            <div class="po-form-title">🔖 <span id="po-prod-name">—</span></div>
+            <div style="font-size:.75rem;color:var(--ink3);margin-bottom:10px;line-height:1.6">
+              Produk ini sedang <b>habis stok</b>. Daftarkan pre-order dan kami akan
+              kirim notifikasi begitu stok tersedia.
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;background:var(--sky-l);border-radius:8px;margin-bottom:10px">
+              <span style="font-size:.72rem;color:var(--sky)">Harga estimasi</span>
+              <span style="font-size:.84rem;font-weight:800;color:var(--sky)" id="po-prod-price">—</span>
+            </div>
+            <div style="margin-bottom:9px">
+              <label style="font-size:.68rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Jumlah</label>
+              <input class="fin" type="number" id="po-qty" value="1" min="1" style="width:80px">
+            </div>
+            <div>
+              <label style="font-size:.68rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Catatan (opsional)</label>
+              <input class="fin" type="text" id="po-note" placeholder="Contoh: hubungi via WA">
+            </div>
+          </div>
+          <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="submitPO()">🔖 Daftarkan Pre-Order</button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+  }
+  document.getElementById('po-modal-title').textContent='Pre-Order: '+prodKey;
+  document.getElementById('po-prod-name').textContent=prodKey;
+  document.getElementById('po-prod-price').textContent='Rp'+prodPrice.toLocaleString('id-ID');
+  document.getElementById('po-qty').value=1;
+  document.getElementById('po-note').value='';
+  ov.classList.add('on');
+};
+window.closePOForm=()=>{
+  document.getElementById('ov-po-form')?.classList.remove('on');
+};
+
+/* ── Submit PO ── */
+window.submitPO = async()=>{
+  if(!curUser||!_poTarget){ toast('❌ Login dulu'); return; }
+  const qty = parseInt(document.getElementById('po-qty')?.value)||1;
+  const note = (document.getElementById('po-note')?.value||'').trim();
+  const us = await getDoc(doc(db,'users',curUser.uid));
+  const ud = us.data()||{};
+  try{
+    await addDoc(collection(db,'preorders'),{
+      userId: curUser.uid,
+      userName: ud.name||'',
+      userKelas: ud.kelas||'',
+      prodKey: _poTarget.key,
+      prodPrice: _poTarget.price,
+      qty,
+      note,
+      status: 'waiting', // waiting | ready | notified
+      createdAt: serverTimestamp(),
+      date: fmtDate(Date.now())
+    });
+    closePOForm();
+    toast('✅ Pre-order berhasil didaftarkan! Kami akan notif jika stok tersedia.');
+    listenMyPO(curUser.uid);
+  }catch(e){ toast('❌ Gagal: '+e.message); }
+};
+
+/* ── Listen my POs (store) ── */
+let _unsubMyPO = null;
+function listenMyPO(uid){
+  if(_unsubMyPO) _unsubMyPO();
+  const q = query(collection(db,'preorders'), where('userId','==',uid), orderBy('createdAt','desc'));
+  _unsubMyPO = onSnapshot(q, snap=>{
+    const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderMyPOList(items);
+  }, e=>console.warn('myPO listener:',e));
+}
+
+function renderMyPOList(items){
+  const card = document.getElementById('my-po-card');
+  const list = document.getElementById('my-po-list');
+  const cnt  = document.getElementById('my-po-count');
+  if(!card||!list) return;
+  if(!items.length){ card.style.display='none'; return; }
+  card.style.display='block';
+  if(cnt) cnt.textContent = items.length + ' item';
+  list.innerHTML = items.map(po=>{
+    const isReady = po.status==='ready'||po.status==='notified';
+    return`<div class="po-item-row">
+      <div class="po-item-ico">${isReady?'✅':'🔖'}</div>
+      <div class="po-item-info">
+        <div class="po-item-name">${po.prodKey} ×${po.qty||1}</div>
+        <div class="po-item-sub">Rp${(po.prodPrice||0).toLocaleString('id-ID')} · ${po.date||'—'}${po.note?' · '+po.note:''}</div>
+      </div>
+      <span class="po-item-status ${isReady?'ready':'wait'}">${isReady?'✅ Stok Tersedia':'⏳ Menunggu'}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ── Admin: listen all POs ── */
+function startPOAdminListener(){
+  if(_unsubPO) _unsubPO();
+  const q = query(collection(db,'preorders'), orderBy('createdAt','desc'));
+  _unsubPO = onSnapshot(q, snap=>{
+    const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderPOAdminPanel(items);
+  }, e=>console.warn('PO admin listener:',e));
+}
+
+function renderPOAdminPanel(items){
+  const panel = document.getElementById('ap-po-admin');
+  const list  = document.getElementById('po-admin-list');
+  const cnt   = document.getElementById('po-admin-count');
+  if(!panel||!list) return;
+  panel.style.display = items.length?'block':'none';
+  if(cnt) cnt.textContent = items.length+' PO';
+  if(!items.length){ list.innerHTML='<div style="text-align:center;padding:14px;color:var(--dt3);font-size:.78rem">Belum ada pre-order</div>'; return; }
+  list.innerHTML = items.map(po=>{
+    const isReady = po.status==='ready'||po.status==='notified';
+    const notifSent = po.status==='notified';
+    return`<div class="po-admin-row">
+      <div style="font-size:1.2rem;flex-shrink:0">${isReady?'✅':'🔖'}</div>
+      <div class="po-admin-info">
+        <div class="po-admin-name">${po.prodKey} ×${po.qty||1}</div>
+        <div class="po-admin-sub">${po.userName||'—'} · ${po.userKelas||'—'} · ${po.date||'—'}${po.note?' · '+po.note:''}</div>
+        <div class="po-admin-sub" style="color:${isReady?'var(--neon4)':'var(--neon3)'}">
+          ${notifSent?'<span class="notif-sent-badge">✅ Notif Terkirim</span>':isReady?'Stok tersedia':'⏳ Menunggu stok'}
+        </div>
+      </div>
+      <div class="po-admin-acts">
+        ${!isReady?`<button class="btn btn-g btn-sm" onclick="markPOReady('${po.id}','${po.userId}','${po.prodKey}')">✅ Stok Ada</button>`:''}
+        <button class="btn btn-sm" style="font-size:.68rem" onclick="deletePOAdmin('${po.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Mark PO as ready & send notif ── */
+window.markPOReady = async(poId, userId, prodKey) => {
+  try{
+    await updateDoc(doc(db,'preorders',poId),{status:'ready'});
+    // Send notification to user
+    await addDoc(collection(db,'notifs'),{
+      userId,
+      title: '🎉 Stok tersedia!',
+      body: `Pre-order kamu untuk "${prodKey}" sudah bisa dibeli! Yuk segera pesan sebelum habis lagi.`,
+      type: 'po_ready',
+      prodKey,
+      read: false,
+      createdAt: serverTimestamp()
+    });
+    await updateDoc(doc(db,'preorders',poId),{status:'notified'});
+    toast('✅ Status diperbarui & notifikasi dikirim ke pembeli!');
+  }catch(e){ toast('❌ Gagal: '+e.message); }
+};
+
+window.deletePOAdmin = async(poId)=>{
+  if(!confirm('Hapus pre-order ini?')) return;
+  await deleteDoc(doc(db,'preorders',poId));
+  toast('🗑️ Pre-order dihapus');
+};
+
+/* ── Update saveProd to include stock ── */
+// buildProdList now lives in PO system above
+
 window.chQ=async(key,d)=>{
   satuanQty[key]=Math.max(0,(satuanQty[key]||0)+d);
   const id=key.replace(/\s/g,'-');
@@ -2914,7 +3365,130 @@ function refresh(){
 }
 
 /* ─── DASHBOARD ─── */
+
+/* ═══════════════════════════
+   VISITOR TRACKING & MEMBER STATS
+═══════════════════════════ */
+let _unsubMembers = null;
+let _visitorId = null;
+
+/* ── Track page visit ── */
+async function trackVisit(){
+  try{
+    const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+    // Unique visitor ID per session
+    _visitorId = sessionStorage.getItem('_vid');
+    if(!_visitorId){
+      _visitorId = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+      sessionStorage.setItem('_vid',_visitorId);
+    }
+    const visRef = doc(db,'visitors', today);
+    const snap = await getDoc(visRef);
+    if(snap.exists()){
+      const ids = snap.data().ids || [];
+      if(!ids.includes(_visitorId)){
+        await setDoc(visRef, {
+          count: (snap.data().count||0)+1,
+          ids: [...ids, _visitorId],
+          date: today
+        },{merge:true});
+      }
+    } else {
+      await setDoc(visRef,{count:1, ids:[_visitorId], date:today});
+    }
+  }catch(e){ console.warn('trackVisit:', e); }
+}
+
+/* ── Listen member stats real-time ── */
+function startMemberStatsListener(){
+  if(_unsubMembers) _unsubMembers();
+  const q = query(collection(db,'users'));
+  _unsubMembers = onSnapshot(q, (snap)=>{
+    const all = snap.docs.map(d=>d.data());
+    const totalMembers = all.length;
+    const totalAdmins  = all.filter(u=>u.role==='admin').length;
+    const totalUsers   = all.filter(u=>u.role!=='admin').length;
+    const blocked      = all.filter(u=>u.blocked).length;
+    const today = new Date().toISOString().slice(0,10);
+    const newToday = all.filter(u=>{
+      if(!u.createdAt) return false;
+      const d = u.createdAt.toDate ? u.createdAt.toDate() : new Date(u.createdAt);
+      return d.toISOString().slice(0,10) === today;
+    }).length;
+
+    // Update DOM
+    const s = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    s('stat-members', totalMembers);
+    s('stat-admins',  totalAdmins);
+    s('stat-admins2', totalAdmins);
+    s('stat-users',   totalUsers);
+    s('stat-blocked', blocked);
+    s('stat-new-today', newToday);
+    s('stat-mem-sub', `${totalUsers} user · ${totalAdmins} admin`);
+    s('stat-adm-sub', `dari ${totalMembers} total akun`);
+  }, (err)=>console.warn('member listener:', err));
+}
+
+/* ── Load visitor stats (today + 7 days) ── */
+async function loadVisitorStats(){
+  try{
+    const today = new Date().toISOString().slice(0,10);
+    // Get last 7 days
+    const days = [];
+    for(let i=6; i>=0; i--){
+      const d = new Date(); d.setDate(d.getDate()-i);
+      days.push(d.toISOString().slice(0,10));
+    }
+    // Fetch all 7 days
+    const counts = await Promise.all(days.map(async day=>{
+      try{
+        const snap = await getDoc(doc(db,'visitors',day));
+        return snap.exists() ? (snap.data().count||0) : 0;
+      }catch(_e){ return 0; }
+    }));
+
+    const todayCount = counts[counts.length-1];
+    const weekTotal  = counts.reduce((a,b)=>a+b,0);
+    const yesterday  = counts[counts.length-2];
+    const diff       = todayCount - yesterday;
+
+    // Update DOM
+    const s = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    s('stat-vis-today', todayCount);
+    s('vis-total-week', weekTotal + ' kunjungan minggu ini');
+    const subTxt = diff>0 ? `↑${diff} dari kemarin`
+                 : diff<0 ? `↓${Math.abs(diff)} dari kemarin`
+                 : 'sama dengan kemarin';
+    s('stat-vis-sub', subTxt + ` · total 7 hari: ${weekTotal}`);
+
+    // Build bar chart
+    const bars = document.getElementById('vis-bars-el'); if(!bars) return;
+    const max = Math.max(...counts, 1);
+    const dayLabels = days.map(d=>{
+      const dd = new Date(d+'T00:00:00');
+      return ['Min','Sen','Sel','Rab','Kam','Jum','Sab'][dd.getDay()];
+    });
+    bars.innerHTML = counts.map((c,i)=>`
+      <div class="vis-bar-wrap">
+        <div class="vis-bar${days[i]===today?' today':''}" 
+          style="height:${Math.max((c/max)*100,3).toFixed(0)}%" 
+          title="${days[i]}: ${c} pengunjung"></div>
+        <div class="vis-bar-lbl">${dayLabels[i]}</div>
+      </div>`).join('');
+  }catch(e){ console.warn('loadVisitorStats:', e); }
+}
+
+/* ── Start real-time visitor listener (updates every 30s) ── */
+let _visRefreshTimer = null;
+function startVisitorLiveRefresh(){
+  loadVisitorStats();
+  if(_visRefreshTimer) clearInterval(_visRefreshTimer);
+  _visRefreshTimer = setInterval(loadVisitorStats, 30000);
+}
+
 function renderDash(){
+  startVisitorLiveRefresh();
+  startMemberStatsListener();
   const tIn=allTxs.filter(t=>t.type==='in').reduce((s,t)=>s+t.amount,0);
   const tOut=allTxs.filter(t=>t.type==='out').reduce((s,t)=>s+t.amount,0);
   set('d-total',allOrders.length);
@@ -3196,17 +3770,22 @@ function renderProduk(){
   allOrders.forEach(o=>o.items?.forEach(it=>{pc[it]=(pc[it]||0)+1;if(o.status!=='pending')pr[it]=(pr[it]||0)+(PM[it]||0);}));
   const tb=document.getElementById('p-tbody');if(!tb)return;
   const cnt=document.getElementById('p-count');if(cnt)cnt.textContent=PRODS.length+' produk';
-  tb.innerHTML=PRODS.length?PRODS.map(p=>`
-    <tr>
+  tb.innerHTML=PRODS.length?PRODS.map(p=>{
+    const sl = stockLabel(p.key);
+    const stockCell = sl
+      ? `<span class="stock-badge ${sl.cls}">${sl.txt}</span> <input class="stock-inp" type="number" min="0" value="${p.stock??''}" placeholder="∞" title="Edit stok" onchange="quickUpdateStock('${p.id||p.key}',this.value)">`
+      : `<span style="font-size:.72rem;color:var(--dt3)">∞ Unlimited</span> <input class="stock-inp" type="number" min="0" value="" placeholder="∞" title="Set stok" onchange="quickUpdateStock('${p.id||p.key}',this.value)">`;
+    return`<tr>
       <td><div class="bnm">${p.key}</div></td>
       <td class="ctot">${fmt(p.price)}</td>
+      <td>${stockCell}</td>
       <td style="color:var(--dt2)">${pc[p.key]||0} unit</td>
       <td class="ctot" style="color:var(--neon2)">${fmt(pr[p.key]||0)}</td>
       <td><div class="ag">
         <button class="ab" title="Edit" onclick="editProd('${p.id||p.key}')">&#9998;</button>
         <button class="ab r" title="Hapus" onclick="deleteProd('${p.id||p.key}','${p.key}')">&#128465;</button>
       </div></td>
-    </tr>`).join(''):'<tr><td colspan="5"><div class="tbl-empty"><div class="tbl-empty-ico">📦</div><div class="tbl-empty-t">Belum ada produk</div></div></td></tr>';
+    </tr>`;}).join(''):'<tr><td colspan="5"><div class="tbl-empty"><div class="tbl-empty-ico">📦</div><div class="tbl-empty-t">Belum ada produk</div></div></td></tr>';
   renderPaketList();
 }
 
@@ -3785,24 +4364,58 @@ window.editProd=async(idOrKey)=>{
   document.getElementById('ap-name').value=p.key;
   document.getElementById('ap-price').value=p.price;
   document.getElementById('ap-prev').textContent=fmt(p.price);
+  const stockEl=document.getElementById('ap-stock');
+  if(stockEl) stockEl.value = (p.stock===null||p.stock===undefined)?'':p.stock;
   document.getElementById('ov-addprod').classList.add('on');
 };
 window.saveProd=async()=>{
   const name=(document.getElementById('ap-name').value||'').trim();
   const price=parseInt(document.getElementById('ap-price').value)||0;
+  const stockVal = document.getElementById('ap-stock')?.value?.trim();
+  const stock = stockVal===''||stockVal===undefined||stockVal===null ? null : parseInt(stockVal)||0;
   if(!name){toast('⚠️ Isi nama produk');return;}
   if(price<1){toast('⚠️ Isi harga produk');return;}
+  const data = {key:name, price, stock: stock===null ? null : stock};
   if(editProdId){
-    await updateDoc(doc(db,'produk',editProdId),{key:name,price});
+    await updateDoc(doc(db,'produk',editProdId), data);
+    // If stock > 0, auto-notify PO users for this product
+    if(stock > 0) await autoNotifyPOForProd(name, stock);
     toast('✅ Produk diperbarui!');
   } else {
-    await addDoc(collection(db,'produk'),{key:name,price,createdAt:serverTimestamp()});
+    await addDoc(collection(db,'produk'),{...data, createdAt:serverTimestamp()});
     toast('✅ Produk ditambahkan!');
   }
   closeAddProd();
   await loadProdsFromDB();
   renderProduk();
 };
+
+/* Auto-notify all waiting POs for a product when stock updated > 0 */
+async function autoNotifyPOForProd(prodKey, newStock){
+  try{
+    const q = query(collection(db,'preorders'),
+      where('prodKey','==',prodKey),
+      where('status','==','waiting'));
+    const snap = await getDocs(q);
+    if(!snap.empty){
+      for(const d of snap.docs){
+        const po = d.data();
+        await updateDoc(doc(db,'preorders',d.id),{status:'ready'});
+        await addDoc(collection(db,'notifs'),{
+          userId: po.userId,
+          title: '🎉 Stok tersedia!',
+          body: `Pre-order kamu untuk "${prodKey}" sudah bisa dibeli! Stok: ${newStock}. Segera pesan sebelum habis.`,
+          type: 'po_ready',
+          prodKey,
+          read: false,
+          createdAt: serverTimestamp()
+        });
+        await updateDoc(doc(db,'preorders',d.id),{status:'notified'});
+      }
+      toast('📣 Notifikasi dikirim ke '+snap.size+' pembeli pre-order!');
+    }
+  }catch(e){ console.warn('autoNotifyPO:', e); }
+}
 window.deleteProd=async(idOrKey,keyName)=>{
   if(!confirm('Hapus produk "'+keyName+'"?'))return;
   if(idOrKey && idOrKey!==keyName){
@@ -3815,6 +4428,29 @@ window.deleteProd=async(idOrKey,keyName)=>{
   toast('🗑️ Produk dihapus');
   await loadProdsFromDB();
   renderProduk();
+};
+
+
+/* ── Quick inline stock update from table ── */
+window.quickUpdateStock = async(idOrKey, val) => {
+  const stock = val===''||val===undefined ? null : parseInt(val)||0;
+  const p = PRODS.find(x=>(x.id||x.key)===idOrKey);
+  if(!p) return;
+  const prodId = p.id||null;
+  try{
+    if(prodId){
+      await updateDoc(doc(db,'produk',prodId),{stock});
+    } else {
+      p.stock = stock;
+    }
+    // Re-sync local PRODS
+    await loadProdsFromDB();
+    buildProdList();
+    renderProduk();
+    // Auto notify if stock now > 0
+    if(stock > 0) await autoNotifyPOForProd(p.key, stock);
+    toast('✅ Stok diperbarui!');
+  }catch(e){ toast('❌ Gagal update stok: '+e.message); }
 };
 
 /* ─── PAKET CRUD ─── */
@@ -4498,7 +5134,7 @@ window.showATabDrawer=(tab,el)=>{
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('on'));
   document.getElementById('ap-'+tab)?.classList.add('on');
   set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',payment:'Pembayaran',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
-  if(tab==='dashboard'){renderDash();renderBenerAdminList();}
+  if(tab==='dashboard'){renderDash();renderBenerAdminList();startVisitorLiveRefresh();}
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
   else if(tab==='produk'){renderProduk();}
@@ -4536,6 +5172,9 @@ window.showView=v=>{
   const bn=document.getElementById('bottom-nav');
   if(bn) bn.classList.toggle('show',v==='store');
 };
+// Track page visit (even before login)
+try{ trackVisit(); }catch(_){}
+
 // Safety fallback — show login after 4s no matter what
 const _splashTimer = setTimeout(()=>{
   const s=document.getElementById('splash');
@@ -4559,6 +5198,7 @@ window.switchTab=(tab,bnavEl)=>{
   document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('on'));
   if(bnavEl)bnavEl.classList.add('on');
   showStoreTab(tab, document.getElementById('stab-btn-'+tab));
+  if(tab==='myorders' && curUser) listenMyPO(curUser.uid);
 };
 // safety timer cleared when auth resolves
 
