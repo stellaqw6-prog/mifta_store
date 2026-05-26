@@ -205,6 +205,35 @@ body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);mi
 .s-tabbar,.s-tabbar-inner,.s-tabbt{display:none!important;}
 .sh-kelas{display:none;}
 
+/* ═══ IMAGE BENER (SLIDESHOW) ═══ */
+/* ═══ IMAGE BENER (SLIDESHOW) ═══ */
+.bener-wrap{position:relative;width:100%;overflow:hidden;background:#0a0604;border-radius:0;margin-bottom:0;}
+.bener-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);}
+.bener-slide{min-width:100%;position:relative;overflow:hidden;}
+.bener-slide img{width:100%;height:200px;object-fit:cover;display:block;}
+.bener-slide .bener-err{width:100%;height:140px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a00,#2a1200);color:#c8906a;font-size:.78rem;gap:7px;}
+.bener-dots{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
+.bener-dot{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s;}
+.bener-dot.on{background:#fff;width:18px;}
+.bener-arr{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.45);border:none;color:#fff;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.bener-arr.prev{left:9px;}
+.bener-arr.next{right:9px;}
+.bener-arr:active{transform:translateY(-50%) scale(.9);}
+/* Admin bener list */
+.bener-item-row{display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--dark4);border-radius:9px;margin-bottom:7px;border:1px solid var(--dark5);}
+.bener-item-thumb{width:56px;height:38px;border-radius:5px;object-fit:cover;background:#111;flex-shrink:0;border:1px solid var(--dark5);}
+.bener-item-thumb-err{width:56px;height:38px;border-radius:5px;background:var(--dark5);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--dt3);}
+.bener-item-url{flex:1;font-size:.74rem;color:var(--dt2);word-break:break-all;line-height:1.4;}
+.bener-item-caption{font-size:.68rem;color:var(--dt3);margin-top:1px;}
+.bener-item-acts{display:flex;gap:5px;flex-shrink:0;}
+.bener-item-acts button{padding:4px 9px;border-radius:6px;border:1px solid var(--dark5);background:var(--dark3);color:var(--dt3);cursor:pointer;font-size:.68rem;font-family:'Outfit',sans-serif;}
+.bener-item-acts button:hover{background:var(--dark5);color:var(--dt);}
+.bener-item-acts .del-btn:hover{background:#7f1d1d;color:#fca5a5;border-color:#7f1d1d;}
+.bener-add-row{display:flex;flex-direction:column;gap:8px;padding:11px;background:var(--dark4);border-radius:9px;border:1.5px dashed var(--dark5);}
+.bener-add-row input{background:var(--dark3);border:1.5px solid var(--dark5);border-radius:7px;color:var(--dt);font-family:'Outfit',sans-serif;font-size:.8rem;padding:8px 10px;outline:none;width:100%;box-sizing:border-box;}
+.bener-add-row input:focus{border-color:rgba(124,106,245,.4);}
+.bener-add-row .add-btn-row{display:flex;gap:7px;justify-content:flex-end;}
+
 /* ═══ PAYMENT SYSTEM ═══ */
 /* Payment method selector */
 .pay-section{background:#fff;border:1px solid #e8e2d9;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
@@ -1298,6 +1327,14 @@ window.resetAllKarbol=async()=>{};
     <div class="s-banner-track" id="s-banner-track"></div>
   </div>
 
+  <!-- Image Bener Slider -->
+  <div id="bener-wrap" class="bener-wrap" style="display:none">
+    <div class="bener-track" id="bener-track"></div>
+    <button class="bener-arr prev" id="bener-prev" onclick="benerPrev()">&#8249;</button>
+    <button class="bener-arr next" id="bener-next" onclick="benerNext()">&#8250;</button>
+    <div class="bener-dots" id="bener-dots"></div>
+  </div>
+
   <!-- Hero -->
   <div class="s-hero">
     <div class="s-hero-inner">
@@ -1683,6 +1720,42 @@ window.resetAllKarbol=async()=>{};
               <div style="font-size:.67rem;color:var(--dt3);margin-top:4px">Contoh: Teks 1 | Teks 2 | Teks 3</div>
             </div>
             <button class="btn btn-p" style="width:100%;justify-content:center;padding:10px" onclick="saveStoreSettings()">&#x1F4BE; Simpan Pengaturan Toko</button>
+          </div>
+        </div>
+
+        <!-- BENER GAMBAR PANEL -->
+        <div class="panel" style="margin-top:14px">
+          <div class="panel-hd" style="display:flex;justify-content:space-between;align-items:center">
+            <span class="panel-title">🖼️ Banner Gambar (Bener)</span>
+            <span style="font-size:.67rem;color:var(--dt3)">Slideshow otomatis di atas toko</span>
+          </div>
+          <div class="panel-body">
+            <div id="bener-admin-list" style="margin-bottom:10px">
+              <div style="text-align:center;padding:14px;color:var(--dt3);font-size:.78rem">Belum ada gambar. Tambahkan di bawah.</div>
+            </div>
+            <!-- Add new bener item -->
+            <div class="bener-add-row">
+              <div style="font-size:.72rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.5px">+ Tambah Gambar</div>
+              <input type="url" id="bener-new-url" placeholder="https://rahmad-elaina.my.id/file/2e001319cf.jpg" oninput="previewBenerNew()">
+              <input type="text" id="bener-new-caption" placeholder="Keterangan gambar (opsional)">
+              <div style="margin:4px 0">
+                <div style="font-size:.68rem;color:var(--dt3);margin-bottom:5px">Preview:</div>
+                <div id="bener-new-preview" style="width:100%;height:80px;border-radius:7px;background:var(--dark3);border:1px solid var(--dark5);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--dt3);font-size:.72rem">
+                  Masukkan URL gambar untuk preview
+                </div>
+              </div>
+              <div class="add-btn-row">
+                <button class="btn" style="font-size:.78rem;padding:7px 14px" onclick="cancelBenerNew()">Batal</button>
+                <button class="btn btn-p" style="font-size:.78rem;padding:7px 16px" onclick="addBenerItem()">➕ Tambahkan</button>
+              </div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn btn-p" style="flex:1;justify-content:center;padding:9px" onclick="saveBenerSettings()">💾 Simpan Banner Gambar</button>
+              <button class="btn" style="padding:9px 14px" onclick="previewBenerInStore()">👁️ Preview</button>
+            </div>
+            <div style="font-size:.67rem;color:var(--dt3);margin-top:6px;line-height:1.5">
+              Drag untuk urutkan ulang. Slide otomatis setiap 4 detik. Mendukung gambar dari URL manapun.
+            </div>
           </div>
         </div>
       </div>
@@ -2259,6 +2332,7 @@ onAuthStateChanged(auth, async u => {
       startListeners();
       loadStoreSettings();
       loadPaymentSettings();
+      loadBenerSettings();
     } else {
       showView('store');
       set('st-name', data.name||u.email);
@@ -2269,6 +2343,7 @@ onAuthStateChanged(auth, async u => {
       buildProdList();
       loadStoreSettings();
       loadPaymentSettings();
+      loadBenerSettings();
       listenMyOrders(u.uid);
       startNotifListener(u.uid);
     }
@@ -3448,6 +3523,184 @@ let storeSettings = {
   banner: '🧴 Selamat datang di Unit Produksi! | 🛒 Pilih paket favoritmu sekarang | ✅ Produk berkualitas, harga terjangkau | 🔥 Tersedia Paket 1, 2A, 2B dan Satuan'
 };
 
+
+/* ═══════════════════════════
+   BENER (IMAGE SLIDESHOW)
+═══════════════════════════ */
+let benerItems = []; // [{url, caption}]
+let benerIdx = 0;
+let benerTimer = null;
+
+/* ── Load bener from Firebase ── */
+async function loadBenerSettings(){
+  try{
+    const snap = await getDoc(doc(db,'settings','bener'));
+    if(snap.exists() && Array.isArray(snap.data().items)){
+      benerItems = snap.data().items;
+    }
+  }catch(e){}
+  buildBenerStore();
+  renderBenerAdminList();
+}
+
+/* ── Build slider in store ── */
+function buildBenerStore(){
+  const wrap = document.getElementById('bener-wrap');
+  const track = document.getElementById('bener-track');
+  const dots = document.getElementById('bener-dots');
+  if(!wrap||!track||!dots) return;
+  const items = benerItems.filter(i=>i.url);
+  if(!items.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  track.innerHTML = items.map((item,i)=>`
+    <div class="bener-slide">
+      <img src="${item.url}" alt="${item.caption||''}"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        style="width:100%;height:200px;object-fit:cover;display:block">
+      <div class="bener-err" style="display:none">⚠️ Gambar tidak dapat dimuat</div>
+    </div>`).join('');
+  dots.innerHTML = items.map((_,i)=>`<div class="bener-dot${i===0?' on':''}" onclick="benerGo(${i})"></div>`).join('');
+  // show/hide arrows
+  const prev = document.getElementById('bener-prev');
+  const next = document.getElementById('bener-next');
+  if(prev) prev.style.display = items.length>1?'flex':'none';
+  if(next) next.style.display = items.length>1?'flex':'none';
+  benerIdx = 0;
+  updateBenerPos();
+  startBenerAuto(items.length);
+}
+
+function updateBenerPos(){
+  const track = document.getElementById('bener-track');
+  if(!track) return;
+  track.style.transform = `translateX(-${benerIdx*100}%)`;
+  document.querySelectorAll('.bener-dot').forEach((d,i)=>{
+    d.classList.toggle('on', i===benerIdx);
+  });
+}
+
+function startBenerAuto(len){
+  if(benerTimer) clearInterval(benerTimer);
+  if(len<=1) return;
+  benerTimer = setInterval(()=>{
+    benerIdx = (benerIdx+1) % len;
+    updateBenerPos();
+  }, 4000);
+}
+
+window.benerPrev=()=>{
+  const len = benerItems.filter(i=>i.url).length;
+  if(!len) return;
+  benerIdx = (benerIdx-1+len)%len;
+  updateBenerPos();
+  startBenerAuto(len);
+};
+window.benerNext=()=>{
+  const len = benerItems.filter(i=>i.url).length;
+  if(!len) return;
+  benerIdx = (benerIdx+1)%len;
+  updateBenerPos();
+  startBenerAuto(len);
+};
+window.benerGo=(i)=>{
+  benerIdx=i; updateBenerPos();
+  startBenerAuto(benerItems.filter(x=>x.url).length);
+};
+
+/* ── Admin: render list ── */
+function renderBenerAdminList(){
+  const el = document.getElementById('bener-admin-list'); if(!el) return;
+  if(!benerItems.length){
+    el.innerHTML='<div style="text-align:center;padding:14px;color:var(--dt3);font-size:.78rem">Belum ada gambar. Tambahkan di bawah.</div>';
+    return;
+  }
+  el.innerHTML = benerItems.map((item,i)=>`
+    <div class="bener-item-row" id="bener-row-${i}">
+      <img class="bener-item-thumb" src="${item.url}"
+        onerror="this.style.display='none';this.nextSibling.style.display='flex'"
+        style="display:block">
+      <div class="bener-item-thumb-err" style="display:none">🖼️</div>
+      <div style="flex:1;min-width:0">
+        <div class="bener-item-url">${item.url}</div>
+        ${item.caption?`<div class="bener-item-caption">${item.caption}</div>`:''}
+      </div>
+      <div class="bener-item-acts">
+        ${i>0?`<button onclick="benerMoveUp(${i})" title="Naik">↑</button>`:''}
+        ${i<benerItems.length-1?`<button onclick="benerMoveDown(${i})" title="Turun">↓</button>`:''}
+        <button onclick="benerEdit(${i})" title="Edit">✏️</button>
+        <button class="del-btn" onclick="benerDelete(${i})" title="Hapus">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+window.benerMoveUp=(i)=>{
+  if(i===0) return;
+  [benerItems[i-1],benerItems[i]]=[benerItems[i],benerItems[i-1]];
+  renderBenerAdminList();
+};
+window.benerMoveDown=(i)=>{
+  if(i>=benerItems.length-1) return;
+  [benerItems[i+1],benerItems[i]]=[benerItems[i],benerItems[i+1]];
+  renderBenerAdminList();
+};
+window.benerDelete=(i)=>{
+  if(!confirm('Hapus gambar ini?')) return;
+  benerItems.splice(i,1);
+  renderBenerAdminList();
+  buildBenerStore();
+};
+window.benerEdit=(i)=>{
+  const item=benerItems[i];
+  const urlEl=document.getElementById('bener-new-url');
+  const capEl=document.getElementById('bener-new-caption');
+  if(urlEl) urlEl.value=item.url;
+  if(capEl) capEl.value=item.caption||'';
+  previewBenerNew();
+  // Remove & re-add at bottom
+  benerItems.splice(i,1);
+  renderBenerAdminList();
+  urlEl?.focus();
+};
+
+/* ── Admin: preview new URL ── */
+window.previewBenerNew=()=>{
+  const url=(document.getElementById('bener-new-url')?.value||'').trim();
+  const prev=document.getElementById('bener-new-preview'); if(!prev) return;
+  if(!url){ prev.innerHTML='Masukkan URL gambar untuk preview'; prev.style.background='var(--dark3)'; return; }
+  prev.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:6px" onerror="this.parentNode.innerHTML='❌ Gambar tidak dapat dimuat (cek URL)'">`;
+};
+
+window.cancelBenerNew=()=>{
+  const u=document.getElementById('bener-new-url');const c=document.getElementById('bener-new-caption');
+  if(u)u.value='';if(c)c.value='';
+  const p=document.getElementById('bener-new-preview');
+  if(p)p.innerHTML='Masukkan URL gambar untuk preview';
+};
+
+window.addBenerItem=()=>{
+  const url=(document.getElementById('bener-new-url')?.value||'').trim();
+  const caption=(document.getElementById('bener-new-caption')?.value||'').trim();
+  if(!url){toast('⚠️ Masukkan URL gambar dulu'); return;}
+  if(!url.startsWith('http')){ toast('⚠️ URL harus dimulai dengan http/https'); return; }
+  benerItems.push({url,caption});
+  renderBenerAdminList();
+  cancelBenerNew();
+  toast('✅ Gambar ditambahkan! Jangan lupa simpan.');
+};
+
+window.previewBenerInStore=()=>{
+  buildBenerStore();
+  toast('👁️ Preview diperbarui di toko');
+};
+
+window.saveBenerSettings=async()=>{
+  try{
+    await setDoc(doc(db,'settings','bener'),{items:benerItems});
+    buildBenerStore();
+    toast('✅ Banner gambar disimpan!');
+  }catch(e){ toast('❌ Gagal: '+e.message); }
+};
+
 async function loadStoreSettings(){
   try{
     const snap=await getDoc(doc(db,'settings','store'));
@@ -4245,7 +4498,7 @@ window.showATabDrawer=(tab,el)=>{
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('on'));
   document.getElementById('ap-'+tab)?.classList.add('on');
   set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',payment:'Pembayaran',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
-  if(tab==='dashboard')renderDash();
+  if(tab==='dashboard'){renderDash();renderBenerAdminList();}
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
   else if(tab==='produk'){renderProduk();}
