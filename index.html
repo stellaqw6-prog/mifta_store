@@ -205,6 +205,58 @@ body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);mi
 .s-tabbar,.s-tabbar-inner,.s-tabbt{display:none!important;}
 .sh-kelas{display:none;}
 
+/* ═══ PAYMENT SYSTEM ═══ */
+/* Payment method selector */
+.pay-section{background:#fff;border:1px solid #e8e2d9;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:4px 0;}
+.pay-card{border:2px solid #e8e2d9;border-radius:11px;padding:12px;cursor:pointer;transition:all .18s;background:#fdfcfa;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;}
+.pay-card:hover{border-color:#c84220;transform:translateY(-1px);box-shadow:0 4px 14px rgba(200,66,10,.1);}
+.pay-card.on{border-color:#c84220;background:linear-gradient(135deg,#fff8f5,#fef2ec);}
+.pay-card.on::after{content:'✓';position:absolute;top:7px;right:8px;width:17px;height:17px;border-radius:50%;background:#c84220;color:#fff;font-size:.58rem;font-weight:900;display:flex;align-items:center;justify-content:center;}
+.pay-card.disabled{opacity:.4;cursor:not-allowed;pointer-events:none;}
+.pay-ico{font-size:1.5rem;line-height:1;}
+.pay-name{font-size:.8rem;font-weight:800;color:var(--ink);}
+.pay-acct{font-size:.67rem;color:var(--ink3);text-align:center;line-height:1.4;word-break:break-all;}
+.pay-badge{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:9px;background:rgba(200,66,10,.1);color:#c84220;margin-top:1px;}
+/* QR display area */
+.pay-qr-box{background:#fdfcfa;border:1px solid #e8e2d9;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:4px;}
+.pay-qr-img{width:180px;height:180px;border-radius:10px;object-fit:contain;border:2px solid #e8e2d9;background:#fff;}
+.pay-qr-fallback{width:180px;height:180px;border-radius:10px;background:linear-gradient(135deg,#1a1410,#2d1f14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:2.5rem;}
+.pay-qr-lbl{font-size:.73rem;color:var(--ink3);text-align:center;line-height:1.5;}
+.pay-acct-big{font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:1px;text-align:center;}
+.pay-copy-btn{padding:7px 16px;border-radius:8px;border:1.5px solid #e8e2d9;background:#fff;color:var(--ink2);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.77rem;font-weight:700;transition:.15s;display:flex;align-items:center;gap:5px;}
+.pay-copy-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+.pay-copy-btn.copied{background:#2d6a4f;color:#fff;border-color:#2d6a4f;}
+.pay-total-remind{background:linear-gradient(135deg,#1a1410,#2d1f14);border-radius:9px;padding:11px 15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.pay-total-remind span:first-child{font-size:.67rem;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.pay-total-remind span:last-child{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;}
+/* Payment steps */
+.pay-steps{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.pay-step{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;background:#fdfcfa;border-radius:8px;border:1px solid #e8e2d9;}
+.pay-step-num{width:20px;height:20px;min-width:20px;border-radius:50%;background:#c84220;color:#fff;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.pay-step-txt{font-size:.76rem;color:var(--ink2);line-height:1.5;flex:1;}
+/* Admin payment settings */
+.pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.pm-card{background:var(--dark3);border:1px solid var(--dark4);border-radius:11px;overflow:hidden;}
+.pm-card-hd{padding:12px 14px;border-bottom:1px solid var(--dark4);display:flex;align-items:center;justify-content:space-between;}
+.pm-card-title{display:flex;align-items:center;gap:7px;font-size:.84rem;font-weight:700;color:var(--dt);}
+.pm-toggle{width:38px;height:21px;border-radius:11px;border:none;cursor:pointer;transition:.2s;position:relative;flex-shrink:0;}
+.pm-toggle.on{background:linear-gradient(135deg,#2d6a4f,#00c97a);}
+.pm-toggle.off{background:var(--dark5);}
+.pm-toggle::after{content:'';position:absolute;top:3px;width:15px;height:15px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.3);}
+.pm-toggle.on::after{left:20px;}
+.pm-toggle.off::after{left:3px;}
+.pm-card-body{padding:12px 14px;}
+.pm-field{margin-bottom:10px;}
+.pm-field:last-child{margin-bottom:0;}
+.pm-label{display:block;font-size:.63rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.pm-input{width:100%;padding:8px 10px;background:var(--dark4);border:1.5px solid var(--dark5);border-radius:8px;color:var(--dt);font-family:'Outfit',sans-serif;font-size:.81rem;outline:none;transition:border .2s;box-sizing:border-box;}
+.pm-input:focus{border-color:rgba(124,106,245,.5);}
+.pm-qr-upload{width:100%;height:90px;background:var(--dark4);border:2px dashed var(--dark5);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:.2s;margin-top:5px;}
+.pm-qr-upload:hover{border-color:rgba(124,106,245,.4);}
+.pm-qr-preview{width:100%;height:100%;object-fit:contain;}
+@media(max-width:680px){.pm-grid{grid-template-columns:1fr;}.pay-methods{grid-template-columns:1fr 1fr;}}
+
 
 /* ═══════════════════════════
    ADMIN PANEL
@@ -1297,6 +1349,16 @@ window.resetAllKarbol=async()=>{};
         </div>
 
         <div class="sc">
+          <div class="sc-hd"><span class="sc-icon">💳</span><span class="sc-title">Metode Pembayaran</span><span class="sc-sub">Pilih metode</span></div>
+          <div class="sc-body">
+            <div class="pay-methods" id="store-pay-methods">
+              <div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--ink3);font-size:.78rem">Memuat metode pembayaran...</div>
+            </div>
+            <div id="pay-detail-box" style="display:none;margin-top:10px"></div>
+          </div>
+        </div>
+
+        <div class="sc">
           <div class="sc-hd"><span class="sc-icon">✅</span><span class="sc-title">Konfirmasi Pesanan</span></div>
           <div class="sc-body">
             <div class="tbar">
@@ -1315,8 +1377,9 @@ window.resetAllKarbol=async()=>{};
       <div class="suc" id="success-box">
         <div class="suc-icon">🎉</div>
         <div class="suc-title">Pesanan Berhasil!</div>
-        <div class="suc-sub">Pesananmu sudah tercatat. Lakukan pembayaran ke petugas kelas.</div>
+        <div class="suc-sub" id="suc-sub-txt">Pesananmu sudah tercatat. Lakukan pembayaran sesuai metode yang dipilih.</div>
         <div class="suc-detail" id="success-detail"></div>
+        <div id="suc-pay-info" style="margin-bottom:14px;display:none"></div>
         <button class="reset-btn" onclick="resetStoreForm()">← Pesan Lagi</button>
       </div>
     </div>
@@ -1395,6 +1458,7 @@ window.resetAllKarbol=async()=>{};
       <button class="ni" onclick="showATab('keuangan',this)"><span class="ni-ico">💰</span>Keuangan</button>
       <div class="sb-sec" style="margin-top:6px">Data</div>
       <button class="ni" onclick="showATab('produk',this)"><span class="ni-ico">📦</span>Produk & Stok</button>
+      <button class="ni" onclick="showATab('payment',this)"><span class="ni-ico">💳</span>Pembayaran</button>
       <button class="ni" onclick="showATab('users',this)"><span class="ni-ico">👥</span>Member</button>
       <button class="ni" onclick="showATab('laporan',this)"><span class="ni-ico">📊</span>Laporan</button>
     </nav>
@@ -1704,6 +1768,134 @@ window.resetAllKarbol=async()=>{};
       </div>
 
 
+      <!-- PAYMENT SETTINGS -->
+      <div id="ap-payment" class="ap">
+        <div class="phd">
+          <div><div class="phd-title">Pengaturan Pembayaran</div><div class="phd-sub">Kelola metode pembayaran yang tampil di toko</div></div>
+          <div class="phd-acts"><button class="btn btn-p" onclick="savePaymentSettings()">💾 Simpan Semua</button></div>
+        </div>
+
+        <div class="pm-grid">
+          <!-- QRIS -->
+          <div class="pm-card">
+            <div class="pm-card-hd">
+              <div class="pm-card-title"><span>🟡</span> QRIS</div>
+              <button class="pm-toggle off" id="pm-toggle-qris" onclick="togglePM('qris',this)" title="Aktif/Nonaktif"></button>
+            </div>
+            <div class="pm-card-body">
+              <div class="pm-field">
+                <label class="pm-label">Nama Penerima</label>
+                <input class="pm-input" type="text" id="pm-qris-name" placeholder="Unit Produksi Kelas X">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Upload Foto QR Code</label>
+                <div id="pm-qris-upload" style="width:100%;height:120px;background:var(--dark4);border:2px dashed var(--dark5);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:.2s;margin-top:5px" onclick="document.getElementById('pm-qris-file').click()">
+                  <span style="font-size:1.6rem">📷</span>
+                  <span style="font-size:.7rem;color:var(--dt3);margin-top:4px">Ketuk untuk upload QR</span>
+                  <input type="file" id="pm-qris-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-qris-upload','qris')">
+                </div>
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Catatan Tambahan</label>
+                <input class="pm-input" type="text" id="pm-qris-note" placeholder="Scan QR untuk bayar">
+              </div>
+            </div>
+          </div>
+
+          <!-- Dana -->
+          <div class="pm-card">
+            <div class="pm-card-hd">
+              <div class="pm-card-title"><span>🔵</span> Dana</div>
+              <button class="pm-toggle off" id="pm-toggle-dana" onclick="togglePM('dana',this)" title="Aktif/Nonaktif"></button>
+            </div>
+            <div class="pm-card-body">
+              <div class="pm-field">
+                <label class="pm-label">Nomor HP / Akun Dana</label>
+                <input class="pm-input" type="text" id="pm-dana-number" placeholder="08xxxxxxxxxx">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Nama Penerima</label>
+                <input class="pm-input" type="text" id="pm-dana-name" placeholder="Nama pemilik akun">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Upload QR Dana (opsional)</label>
+                <div id="pm-dana-upload" style="width:100%;height:90px;background:var(--dark4);border:2px dashed var(--dark5);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:.2s;margin-top:5px" onclick="document.getElementById('pm-dana-file').click()">
+                  <span style="font-size:1.3rem">📷</span>
+                  <span style="font-size:.68rem;color:var(--dt3);margin-top:3px">Upload QR Dana</span>
+                  <input type="file" id="pm-dana-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-dana-upload','dana')">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GoPay -->
+          <div class="pm-card">
+            <div class="pm-card-hd">
+              <div class="pm-card-title"><span>🟢</span> GoPay</div>
+              <button class="pm-toggle off" id="pm-toggle-gopay" onclick="togglePM('gopay',this)" title="Aktif/Nonaktif"></button>
+            </div>
+            <div class="pm-card-body">
+              <div class="pm-field">
+                <label class="pm-label">Nomor HP / Akun GoPay</label>
+                <input class="pm-input" type="text" id="pm-gopay-number" placeholder="08xxxxxxxxxx">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Nama Penerima</label>
+                <input class="pm-input" type="text" id="pm-gopay-name" placeholder="Nama pemilik akun">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Upload QR GoPay (opsional)</label>
+                <div id="pm-gopay-upload" style="width:100%;height:90px;background:var(--dark4);border:2px dashed var(--dark5);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:.2s;margin-top:5px" onclick="document.getElementById('pm-gopay-file').click()">
+                  <span style="font-size:1.3rem">📷</span>
+                  <span style="font-size:.68rem;color:var(--dt3);margin-top:3px">Upload QR GoPay</span>
+                  <input type="file" id="pm-gopay-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-gopay-upload','gopay')">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transfer Bank -->
+          <div class="pm-card">
+            <div class="pm-card-hd">
+              <div class="pm-card-title"><span>🏦</span> Transfer Bank</div>
+              <button class="pm-toggle off" id="pm-toggle-bank" onclick="togglePM('bank',this)" title="Aktif/Nonaktif"></button>
+            </div>
+            <div class="pm-card-body">
+              <div class="pm-field">
+                <label class="pm-label">Nama Bank</label>
+                <input class="pm-input" type="text" id="pm-bank-bankname" placeholder="BRI / BCA / Mandiri / BNI">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Nomor Rekening</label>
+                <input class="pm-input" type="text" id="pm-bank-number" placeholder="123456789">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Nama Pemilik Rekening</label>
+                <input class="pm-input" type="text" id="pm-bank-name" placeholder="Nama lengkap pemilik">
+              </div>
+              <div class="pm-field">
+                <label class="pm-label">Catatan</label>
+                <input class="pm-input" type="text" id="pm-bank-note" placeholder="Konfirmasi ke ketua kelas">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px;font-size:.88rem" onclick="savePaymentSettings()">💾 Simpan Pengaturan Pembayaran</button>
+        </div>
+
+        <!-- Preview -->
+        <div class="panel" style="margin-top:14px">
+          <div class="panel-hd"><span class="panel-title">👁️ Preview di Toko</span><span style="font-size:.68rem;color:var(--dt3)">Tampilan real-time setelah disimpan</span></div>
+          <div class="panel-body" style="background:var(--dark);padding:16px">
+            <div class="pay-methods" id="pm-preview-methods" style="max-width:400px;margin:0 auto">
+              <div style="grid-column:1/-1;text-align:center;color:var(--dt3);font-size:.78rem;padding:12px">Simpan untuk melihat preview</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- USERS / MEMBER -->
       <div id="ap-users" class="ap">
         <div class="phd">
@@ -1779,6 +1971,9 @@ window.resetAllKarbol=async()=>{};
       </button>
       <button class="dni" id="dni-produk" onclick="showATabDrawer('produk',this)">
         <span class="dni-ico">📦</span>Produk &amp; Stok
+      </button>
+      <button class="dni" id="dni-payment" onclick="showATabDrawer('payment',this)">
+        <span class="dni-ico">💳</span>Pembayaran
       </button>
       <button class="dni" id="dni-users" onclick="showATabDrawer('users',this)">
         <span class="dni-ico">👥</span>Member
@@ -2024,8 +2219,30 @@ onAuthStateChanged(auth, async u => {
   try {
   if (u) {
     curUser = u;
-    const snap = await getDoc(doc(db,'users',u.uid));
-    if (!snap.exists()) { await signOut(auth); return; }
+    let snap;
+    try{ snap = await getDoc(doc(db,'users',u.uid)); }
+    catch(dbErr){
+      console.warn('onAuthStateChanged Firestore error:', dbErr);
+      showView('login');
+      toast('⚠️ Gagal memuat data. Cek koneksi internet.');
+      return;
+    }
+    if (!snap || !snap.exists()) {
+      // User dokumen belum ada, coba buat otomatis
+      try{
+        await setDoc(doc(db,'users',u.uid),{
+          name:(u.email||'User').split('@')[0],
+          kelas:'',email:u.email||''
+          ,role:'user',createdAt:serverTimestamp()
+        });
+        snap = await getDoc(doc(db,'users',u.uid));
+      }catch(e2){
+        await signOut(auth);
+        showView('login');
+        toast('❌ Gagal membuat profil. Coba daftar ulang.');
+        return;
+      }
+    }
     const data = snap.data();
     curRole = data.role;
     if(data.blocked && curRole!=='admin'){
@@ -2041,6 +2258,7 @@ onAuthStateChanged(auth, async u => {
       if(dun)dun.textContent=data.name||'Admin';
       startListeners();
       loadStoreSettings();
+      loadPaymentSettings();
     } else {
       showView('store');
       set('st-name', data.name||u.email);
@@ -2050,6 +2268,7 @@ onAuthStateChanged(auth, async u => {
       buildStorePackets();
       buildProdList();
       loadStoreSettings();
+      loadPaymentSettings();
       listenMyOrders(u.uid);
       startNotifListener(u.uid);
     }
@@ -2093,24 +2312,52 @@ window.doLogin = async()=>{
   const email=val('l-email'), pass=val('l-pass');
   if(!email||!pass){toast('⚠️ Isi email dan password');return;}
   const btn=document.getElementById('l-btn');
+  const origTxt = btn.textContent;
   btn.disabled=true; btn.textContent='Masuk...';
+  const resetBtn = ()=>{ btn.disabled=false; btn.textContent=origTxt; };
   try{
     const cred = await signInWithEmailAndPassword(auth,email,pass);
-    const snap = await getDoc(doc(db,'users',cred.user.uid));
-    if(snap.exists()){
-      const role = snap.data().role;
-      if(loginRole==='admin' && role!=='admin'){
-        await signOut(auth);
-        toast('❌ Akun ini bukan admin');
-        btn.disabled=false; btn.textContent='🔐 Masuk Admin →';
-        return;
-      }
-      if(loginRole==='user' && role==='admin'){
-        // admin boleh masuk lewat tombol user juga, biarkan lanjut
-      }
+    let snap;
+    try{ snap = await getDoc(doc(db,'users',cred.user.uid)); }
+    catch(dbErr){
+      // Firestore error (network/rules) - tetap lanjut lewat onAuthStateChanged
+      console.warn('Firestore getDoc error:', dbErr);
+      resetBtn(); return;
     }
+    if(!snap || !snap.exists()){
+      // Akun Firebase Auth ada tapi dokumen user belum dibuat - buat otomatis
+      try{
+        await setDoc(doc(db,'users',cred.user.uid),{
+          name: (cred.user.email||'').split('@')[0],
+          kelas: '',
+          email: cred.user.email||'',
+          role: 'user',
+          createdAt: serverTimestamp()
+        });
+        toast('✅ Akun ditemukan! Lengkapi profil kamu.');
+      }catch(e2){ console.warn('setDoc fallback error:',e2); }
+      resetBtn(); return;
+    }
+    const data = snap.data();
+    const role = data.role;
+    if(loginRole==='admin' && role!=='admin'){
+      await signOut(auth);
+      toast('❌ Akun ini bukan admin');
+      resetBtn(); btn.textContent='🔐 Masuk Admin →';
+      return;
+    }
+    if(data.blocked && role!=='admin'){
+      await signOut(auth);
+      toast('🚫 Akun kamu telah diblokir. Hubungi admin.');
+      resetBtn(); return;
+    }
+    // Sukses - onAuthStateChanged handle navigasi
+    resetBtn();
   }
-  catch(e){ toast('❌ '+fErr(e.code)); btn.disabled=false; btn.textContent=loginRole==='admin'?'🔐 Masuk Admin →':'Masuk →'; }
+  catch(e){
+    toast('❌ '+fErr(e.code));
+    resetBtn();
+  }
 };
 window.doRegister = async()=>{
   const name=val('r-name'),kelas=val('r-kelas'),email=val('r-email'),pass=val('r-pass');
@@ -2282,9 +2529,14 @@ function fErr(c){return({
   'auth/user-not-found':'Akun tidak ditemukan',
   'auth/wrong-password':'Password salah',
   'auth/email-already-in-use':'Email sudah terdaftar',
-  'auth/invalid-email':'Email tidak valid',
+  'auth/invalid-email':'Format email tidak valid',
   'auth/invalid-credential':'Email atau password salah',
-}[c])||'Terjadi kesalahan';}
+  'auth/too-many-requests':'Terlalu banyak percobaan. Coba lagi nanti.',
+  'auth/network-request-failed':'Gagal terhubung. Cek koneksi internet.',
+  'auth/user-disabled':'Akun ini telah dinonaktifkan.',
+  'auth/operation-not-allowed':'Login tidak diizinkan.',
+  'auth/weak-password':'Password terlalu lemah (min. 6 karakter)',
+}[c])||('Login gagal: '+(c||'error tidak diketahui'));}
 
 /* ─── STORE ─── */
 function buildProdList(){
@@ -2333,6 +2585,11 @@ function updTotal(){
   set('s-total',fmt(t));set('s-items-txt',txt);
   const mb=document.getElementById('s-min-badge');
   if(mb){const ok=selPaket&&(selPaket!=='satuan'||t>=20000);mb.textContent=ok?'✓ Syarat terpenuhi':'Min Rp20.000';mb.className='tbar-min'+(ok?' ok':'');}
+  // Update payment total display if visible
+  const ptEl=document.getElementById('pay-detail-total');
+  if(ptEl)ptEl.textContent=fmt(t);
+  const pstEl=document.getElementById('pay-step-total');
+  if(pstEl)pstEl.textContent=fmt(t);
   return t;
 }
 window.submitOrder=async()=>{
@@ -2354,11 +2611,14 @@ window.submitOrder=async()=>{
     paket='Satuan';total=updTotal();if(total<20000){toast('⚠️ Minimum Rp20.000');return;}
   }
   if(!items.length){toast('⚠️ Pilih minimal 1 produk');return;}
+  // Check payment method
+  const activePayMethods = Object.entries(paymentSettings).filter(([k,v])=>v.active);
+  if(activePayMethods.length > 0 && !selPayMethod){toast('⚠️ Pilih metode pembayaran dulu');return;}
   btn.disabled=true;btn.textContent='Menyimpan...';
   try{
-    await addDoc(collection(db,'orders'),{userId:curUser.uid,name,kelas,paket,items,total,status:'pending',createdAt:serverTimestamp(),date:fmtDate(Date.now())});
-    showSuccess({name,kelas,paket,items,total});
-    selPaket=null;satuanQty={};
+    await addDoc(collection(db,'orders'),{userId:curUser.uid,name,kelas,paket,items,total,status:'pending',paymentMethod:selPayMethod||'',createdAt:serverTimestamp(),date:fmtDate(Date.now())});
+    showSuccess({name,kelas,paket,items,total,paymentMethod:selPayMethod||''});
+    selPaket=null;satuanQty={};selPayMethod=null;
     document.querySelectorAll('.pc').forEach(c=>c.classList.remove('on'));
     document.getElementById('sec-paket1').style.display='none';
     document.getElementById('sec-satuan').style.display='none';
@@ -2369,18 +2629,25 @@ window.submitOrder=async()=>{
 function showSuccess(o){
   document.getElementById('main-form').style.display='none';
   const sb=document.getElementById('success-box');sb.classList.add('on');
+  const payLabels={qris:'QRIS',dana:'Dana',gopay:'GoPay',bank:'Transfer Bank'};
+  const payLine = o.paymentMethod ? `<div class="suc-row"><span>Bayar via</span><span style="color:var(--sky);font-weight:700">${payLabels[o.paymentMethod]||o.paymentMethod}</span></div>` : '';
   document.getElementById('success-detail').innerHTML=`
     <div class="suc-row"><span>Nama</span><span>${o.name}</span></div>
     <div class="suc-row"><span>Kelas</span><span>${o.kelas}</span></div>
     <div class="suc-row"><span>Paket</span><span>${o.paket}</span></div>
     <div class="suc-row"><span>Produk</span><span style="text-align:right;max-width:55%">${o.items.join(', ')}</span></div>
+    ${payLine}
     <div class="suc-row"><span>Status</span><span style="color:var(--gold)">⏳ Menunggu bayar</span></div>
     <div class="suc-row tot"><span>Total</span><span>${fmt(o.total)}</span></div>`;
+  buildSuccessPayInfo(o.total);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 window.resetStoreForm=()=>{
   document.getElementById('main-form').style.display='block';
   document.getElementById('success-box').classList.remove('on');
+  selPayMethod=null;
+  document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('on'));
+  const pb=document.getElementById('pay-detail-box');if(pb)pb.style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 };
 function listenMyOrders(uid){
@@ -2681,6 +2948,7 @@ window.openDetail=id=>{
     <div class="mrow"><span class="mkey">Status</span><span class="mval"><span class="badge b-${o.status}"><span class="bdot"></span>${o.status==='pending'?'Menunggu Bayar':o.status==='paid'?'Sudah Lunas':'Selesai'}</span></span></div>
     <div class="mrow"><span class="mkey">Paket</span><span class="mval" style="color:var(--neon2);font-weight:700">${o.paket}</span></div>
     <div class="mrow"><span class="mkey">Produk</span><div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;max-width:60%">${o.items?.map(it=>`<span class="chip">${it}</span>`).join('')}</div></div>
+    ${o.paymentMethod?`<div class="mrow"><span class="mkey">Metode Bayar</span><span class="mval" style="color:var(--neon3)">${{qris:'🟡 QRIS',dana:'🔵 Dana',gopay:'🟢 GoPay',bank:'🏦 Bank'}[o.paymentMethod]||o.paymentMethod}</span></div>`:''}
     <div class="mrow"><span class="mkey">Tanggal</span><span class="mval">${o.date||'—'}</span></div>`;
   set('dm-total',fmt(o.total));
   const acts=document.getElementById('dm-acts');
@@ -2904,6 +3172,272 @@ function buildStorePackets(){
     </div>`;
 }
 
+
+/* ═══════════════════════════
+   PAYMENT SYSTEM
+═══════════════════════════ */
+let paymentSettings = {
+  qris:  { active:false, name:'', qrData:'', note:'' },
+  dana:  { active:false, number:'', name:'', qrData:'' },
+  gopay: { active:false, number:'', name:'', qrData:'' },
+  bank:  { active:false, bankname:'', number:'', name:'', note:'' }
+};
+let selPayMethod = null; // currently selected payment method in store
+
+/* Load payment settings from Firebase */
+async function loadPaymentSettings(){
+  try{
+    const snap = await getDoc(doc(db,'settings','payment'));
+    if(snap.exists()) paymentSettings = {...paymentSettings, ...snap.data()};
+  }catch(e){}
+  buildStorePayMethods();
+  fillAdminPayForm();
+}
+
+/* Build payment method cards in store */
+function buildStorePayMethods(){
+  const el = document.getElementById('store-pay-methods'); if(!el) return;
+  const icons = {qris:'🟡',dana:'🔵',gopay:'🟢',bank:'🏦'};
+  const labels = {qris:'QRIS',dana:'Dana',gopay:'GoPay',bank:'Transfer Bank'};
+  const active = Object.entries(paymentSettings).filter(([k,v])=>v.active);
+  if(!active.length){
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:14px;color:var(--ink3);font-size:.78rem">Belum ada metode pembayaran aktif.<br>Hubungi admin kelas.</div>';
+    return;
+  }
+  el.innerHTML = active.map(([key,cfg])=>`
+    <div class="pay-card" id="paycard-${key}" onclick="selectPayMethod('${key}')">
+      <div class="pay-ico">${icons[key]}</div>
+      <div class="pay-name">${labels[key]}</div>
+      <div class="pay-acct">${key==='bank'?(cfg.bankname||'—') : (cfg.number||cfg.name||'—')}</div>
+    </div>`).join('');
+  // Auto-select if only one method
+  if(active.length===1) selectPayMethod(active[0][0]);
+}
+
+/* Select a payment method in store */
+window.selectPayMethod = (key)=>{
+  selPayMethod = key;
+  document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('on'));
+  const card = document.getElementById('paycard-'+key);
+  if(card) card.classList.add('on');
+  renderPayDetail(key);
+};
+
+/* Render payment detail/info box */
+function renderPayDetail(key){
+  const box = document.getElementById('pay-detail-box'); if(!box) return;
+  const cfg = paymentSettings[key]; if(!cfg) return;
+  const total = updTotal();
+  let html = '';
+
+  if(key==='qris'){
+    html = `
+      <div class="pay-qr-box">
+        ${cfg.qrData
+          ? `<img class="pay-qr-img" src="${cfg.qrData}" alt="QR Code">`
+          : `<div class="pay-qr-fallback"><span>🟡</span><span style="font-size:.72rem;color:#aaa">QR Code QRIS</span></div>`}
+        <div class="pay-acct-big">${cfg.name||'Unit Produksi'}</div>
+        <div class="pay-qr-lbl">Scan QR Code dengan aplikasi m-banking atau e-wallet manapun</div>
+        ${cfg.note?`<div style="font-size:.72rem;color:var(--gold);text-align:center">⚠️ ${cfg.note}</div>`:''}
+      </div>
+      <div class="pay-total-remind">
+        <span>Nominal Transfer</span>
+        <span id="pay-detail-total">${fmt(total)}</span>
+      </div>
+      <div class="pay-steps">
+        <div class="pay-step"><div class="pay-step-num">1</div><div class="pay-step-txt">Buka aplikasi m-banking atau e-wallet</div></div>
+        <div class="pay-step"><div class="pay-step-num">2</div><div class="pay-step-txt">Pilih menu Scan / QRIS</div></div>
+        <div class="pay-step"><div class="pay-step-num">3</div><div class="pay-step-txt">Scan QR Code di atas dan masukkan nominal <b id="pay-step-total">${fmt(total)}</b></div></div>
+        <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-txt">Upload bukti bayar setelah transfer berhasil</div></div>
+      </div>`;
+  } else if(key==='dana'||key==='gopay'){
+    const label = key==='dana'?'Dana':'GoPay';
+    const color = key==='dana'?'#0066cc':'#00880a';
+    html = `
+      <div class="pay-qr-box">
+        ${cfg.qrData
+          ? `<img class="pay-qr-img" src="${cfg.qrData}" alt="QR ${label}">`
+          : `<div class="pay-qr-fallback"><span>${key==='dana'?'🔵':'🟢'}</span><span style="font-size:.72rem;color:#aaa">QR ${label}</span></div>`}
+        <div class="pay-acct-big" style="color:${color}">${cfg.number||'—'}</div>
+        <div style="font-size:.8rem;font-weight:700;color:var(--ink)">${cfg.name||'—'}</div>
+        <button class="pay-copy-btn" onclick="copyPayNum('${cfg.number||''}',this)">📋 Salin Nomor</button>
+      </div>
+      <div class="pay-total-remind">
+        <span>Nominal Transfer</span>
+        <span id="pay-detail-total">${fmt(total)}</span>
+      </div>
+      <div class="pay-steps">
+        <div class="pay-step"><div class="pay-step-num">1</div><div class="pay-step-txt">Buka aplikasi ${label}</div></div>
+        <div class="pay-step"><div class="pay-step-num">2</div><div class="pay-step-txt">Pilih menu Kirim / Transfer</div></div>
+        <div class="pay-step"><div class="pay-step-num">3</div><div class="pay-step-txt">Masukkan nomor <b>${cfg.number||'—'}</b> a.n. ${cfg.name||'—'}</div></div>
+        <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-txt">Transfer sebesar <b id="pay-step-total">${fmt(total)}</b></div></div>
+        <div class="pay-step"><div class="pay-step-num">5</div><div class="pay-step-txt">Upload bukti bayar setelah transfer berhasil</div></div>
+      </div>`;
+  } else if(key==='bank'){
+    html = `
+      <div class="pay-qr-box" style="gap:6px">
+        <div style="font-size:2rem">🏦</div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:1px">${cfg.bankname||'Transfer Bank'}</div>
+        <div class="pay-acct-big">${cfg.number||'—'}</div>
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink)">${cfg.name||'—'}</div>
+        <button class="pay-copy-btn" onclick="copyPayNum('${cfg.number||''}',this)">📋 Salin Nomor Rekening</button>
+        ${cfg.note?`<div style="font-size:.72rem;color:var(--gold);text-align:center;margin-top:4px">⚠️ ${cfg.note}</div>`:''}
+      </div>
+      <div class="pay-total-remind">
+        <span>Nominal Transfer</span>
+        <span id="pay-detail-total">${fmt(total)}</span>
+      </div>
+      <div class="pay-steps">
+        <div class="pay-step"><div class="pay-step-num">1</div><div class="pay-step-txt">Buka m-banking atau ATM</div></div>
+        <div class="pay-step"><div class="pay-step-num">2</div><div class="pay-step-txt">Pilih Transfer → ${cfg.bankname||'—'}</div></div>
+        <div class="pay-step"><div class="pay-step-num">3</div><div class="pay-step-txt">Masukkan rekening <b>${cfg.number||'—'}</b> a.n. ${cfg.name||'—'}</div></div>
+        <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-txt">Transfer sebesar <b id="pay-step-total">${fmt(total)}</b></div></div>
+        <div class="pay-step"><div class="pay-step-num">5</div><div class="pay-step-txt">Upload bukti bayar setelah transfer berhasil</div></div>
+      </div>`;
+  }
+
+  box.style.display = html ? 'block' : 'none';
+  box.innerHTML = html;
+}
+
+window.copyPayNum = (num, btn)=>{
+  if(!num) return;
+  navigator.clipboard.writeText(num).then(()=>{
+    btn.textContent='✓ Tersalin!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Salin Nomor';},2000);
+  }).catch(()=>{ toast('Nomor: '+num); });
+};
+
+/* Build success payment info */
+function buildSuccessPayInfo(total){
+  const box = document.getElementById('suc-pay-info'); if(!box) return;
+  if(!selPayMethod){ box.style.display='none'; return; }
+  const labels = {qris:'QRIS',dana:'Dana',gopay:'GoPay',bank:'Transfer Bank'};
+  const icons  = {qris:'🟡',dana:'🔵',gopay:'🟢',bank:'🏦'};
+  const cfg = paymentSettings[selPayMethod];
+  let dest = '';
+  if(selPayMethod==='bank') dest = `${cfg.bankname||''} — ${cfg.number||''} a.n. ${cfg.name||''}`;
+  else if(selPayMethod==='qris') dest = cfg.name||'Unit Produksi';
+  else dest = `${cfg.number||''} a.n. ${cfg.name||''}`;
+  box.style.display='block';
+  box.innerHTML=`
+    <div style="background:var(--sky-l);border:1.5px solid rgba(26,77,140,.2);border-radius:11px;padding:14px 16px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--sky);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">💳 Cara Bayar</div>
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+        <span style="font-size:1.3rem">${icons[selPayMethod]}</span>
+        <div>
+          <div style="font-size:.84rem;font-weight:800;color:var(--ink)">${labels[selPayMethod]}</div>
+          <div style="font-size:.72rem;color:var(--ink3)">${dest}</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between">
+        <span style="font-size:.72rem;color:var(--ink3)">Nominal Transfer</span>
+        <span style="font-weight:800;color:#c84220;font-family:'DM Serif Display',serif">${fmt(total)}</span>
+      </div>
+      <div style="font-size:.7rem;color:var(--ink3);margin-top:7px;line-height:1.5">Setelah transfer, kembali ke pesanan dan upload bukti bayar.</div>
+    </div>`;
+}
+
+/* ── ADMIN: toggle payment method ── */
+window.togglePM = (key, btn)=>{
+  const isOn = btn.classList.contains('on');
+  btn.classList.toggle('on', !isOn);
+  btn.classList.toggle('off', isOn);
+};
+
+/* ── ADMIN: preview QR image upload ── */
+window.previewPMImg = (input, containerId, key)=>{
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const cont = document.getElementById(containerId);
+    if(!cont) return;
+    cont.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"><input type="file" id="pm-${key}-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'${containerId}','${key}')">`;
+    cont.onclick=()=>cont.querySelector('input[type=file]').click();
+    // store temp data
+    cont.dataset.imgData = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+/* ── ADMIN: fill form from loaded settings ── */
+function fillAdminPayForm(){
+  const v = (id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
+  const s = paymentSettings;
+  // QRIS
+  v('pm-qris-name',  s.qris?.name);
+  v('pm-qris-note',  s.qris?.note);
+  if(s.qris?.active) togglePMState('qris', true);
+  if(s.qris?.qrData){
+    const u=document.getElementById('pm-qris-upload');
+    if(u){ u.innerHTML=`<img src="${s.qris.qrData}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"><input type="file" id="pm-qris-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-qris-upload','qris')">`;u.onclick=()=>u.querySelector('input').click();u.dataset.imgData=s.qris.qrData;}
+  }
+  // Dana
+  v('pm-dana-number', s.dana?.number);
+  v('pm-dana-name',   s.dana?.name);
+  if(s.dana?.active) togglePMState('dana', true);
+  if(s.dana?.qrData){
+    const u=document.getElementById('pm-dana-upload');
+    if(u){ u.innerHTML=`<img src="${s.dana.qrData}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"><input type="file" id="pm-dana-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-dana-upload','dana')">`;u.onclick=()=>u.querySelector('input').click();u.dataset.imgData=s.dana.qrData;}
+  }
+  // GoPay
+  v('pm-gopay-number', s.gopay?.number);
+  v('pm-gopay-name',   s.gopay?.name);
+  if(s.gopay?.active) togglePMState('gopay', true);
+  if(s.gopay?.qrData){
+    const u=document.getElementById('pm-gopay-upload');
+    if(u){ u.innerHTML=`<img src="${s.gopay.qrData}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"><input type="file" id="pm-gopay-file" accept="image/*" style="display:none" onchange="previewPMImg(this,'pm-gopay-upload','gopay')">`;u.onclick=()=>u.querySelector('input').click();u.dataset.imgData=s.gopay.qrData;}
+  }
+  // Bank
+  v('pm-bank-bankname', s.bank?.bankname);
+  v('pm-bank-number',   s.bank?.number);
+  v('pm-bank-name',     s.bank?.name);
+  v('pm-bank-note',     s.bank?.note);
+  if(s.bank?.active) togglePMState('bank', true);
+}
+
+function togglePMState(key, active){
+  const btn = document.getElementById('pm-toggle-'+key);
+  if(!btn) return;
+  btn.classList.toggle('on', active);
+  btn.classList.toggle('off', !active);
+}
+
+/* ── ADMIN: save payment settings ── */
+window.savePaymentSettings = async()=>{
+  const g = id => (document.getElementById(id)?.value||'').trim();
+  const isOn = key => document.getElementById('pm-toggle-'+key)?.classList.contains('on');
+  const getImg = id => document.getElementById(id)?.dataset?.imgData || paymentSettings[id.replace('pm-','').replace('-upload','')]?.qrData || '';
+
+  paymentSettings = {
+    qris:  { active:isOn('qris'),  name:g('pm-qris-name'),  qrData:document.getElementById('pm-qris-upload')?.dataset?.imgData||paymentSettings.qris?.qrData||'', note:g('pm-qris-note') },
+    dana:  { active:isOn('dana'),  number:g('pm-dana-number'), name:g('pm-dana-name'), qrData:document.getElementById('pm-dana-upload')?.dataset?.imgData||paymentSettings.dana?.qrData||'' },
+    gopay: { active:isOn('gopay'), number:g('pm-gopay-number'), name:g('pm-gopay-name'), qrData:document.getElementById('pm-gopay-upload')?.dataset?.imgData||paymentSettings.gopay?.qrData||'' },
+    bank:  { active:isOn('bank'),  bankname:g('pm-bank-bankname'), number:g('pm-bank-number'), name:g('pm-bank-name'), note:g('pm-bank-note') }
+  };
+
+  try{
+    await setDoc(doc(db,'settings','payment'), paymentSettings);
+    buildStorePayMethods();
+    renderPMPreview();
+    toast('✅ Pengaturan pembayaran disimpan!');
+  }catch(e){ toast('❌ Gagal: '+e.message); }
+};
+
+function renderPMPreview(){
+  const el = document.getElementById('pm-preview-methods'); if(!el) return;
+  const icons = {qris:'🟡',dana:'🔵',gopay:'🟢',bank:'🏦'};
+  const labels = {qris:'QRIS',dana:'Dana',gopay:'GoPay',bank:'Transfer Bank'};
+  const active = Object.entries(paymentSettings).filter(([k,v])=>v.active);
+  if(!active.length){ el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--dt3);font-size:.78rem;padding:12px">Tidak ada metode aktif</div>'; return; }
+  el.innerHTML = active.map(([key,cfg])=>`
+    <div style="border:2px solid var(--dark4);border-radius:11px;padding:12px;background:var(--dark3);display:flex;flex-direction:column;align-items:center;gap:5px">
+      <div style="font-size:1.4rem">${icons[key]}</div>
+      <div style="font-size:.8rem;font-weight:800;color:var(--dt)">${labels[key]}</div>
+      <div style="font-size:.67rem;color:var(--dt3);text-align:center">${key==='bank'?(cfg.bankname||'—'):(cfg.number||cfg.name||'—')}</div>
+    </div>`).join('');
+}
 
 /* ─── STORE SETTINGS ─── */
 let storeSettings = {
@@ -3710,11 +4244,12 @@ window.showATabDrawer=(tab,el)=>{
   // switch panel
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('on'));
   document.getElementById('ap-'+tab)?.classList.add('on');
-  set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
+  set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',payment:'Pembayaran',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
   if(tab==='dashboard')renderDash();
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
   else if(tab==='produk'){renderProduk();}
+  else if(tab==='payment'){fillAdminPayForm();renderPMPreview();}
   else if(tab==='users'){startUsersListener();renderUsers();}
   else if(tab==='laporan'){renderLaporan();}
   window.scrollTo({top:0,behavior:'smooth'});
@@ -3724,11 +4259,12 @@ window.showATab=(tab,el)=>{
   if(el)el.classList.add('on');
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('on'));
   document.getElementById('ap-'+tab)?.classList.add('on');
-  set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
+  set('tb-bc',{dashboard:'Dashboard',orders:'Tracking Pesanan',keuangan:'Keuangan',produk:'Produk & Stok',payment:'Pembayaran',users:'Manajemen Member',laporan:'Laporan & Analitik'}[tab]||tab);
   if(tab==='dashboard')renderDash();
   else if(tab==='orders')renderOrders();
   else if(tab==='keuangan')renderKeu();
   else if(tab==='produk'){renderProduk();}
+  else if(tab==='payment'){fillAdminPayForm();renderPMPreview();}
   else if(tab==='users'){startUsersListener();renderUsers();}
   else if(tab==='laporan'){renderLaporan();}
 };
