@@ -402,6 +402,8 @@ body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);mi
 /* QR display area */
 .pay-qr-box{background:#fdfcfa;border:1px solid #e8e2d9;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:4px;}
 .pay-qr-img{width:180px;height:180px;border-radius:10px;object-fit:contain;border:2px solid #e8e2d9;background:#fff;}
+.qr-dl-badge{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.72);color:#fff;font-size:.62rem;font-weight:800;padding:4px 9px;border-radius:20px;cursor:pointer;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);letter-spacing:.3px;transition:.15s;user-select:none;}
+.qr-dl-badge:hover{background:rgba(200,66,10,.9);}
 .pay-qr-fallback{width:180px;height:180px;border-radius:10px;background:linear-gradient(135deg,#1a1410,#2d1f14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:2.5rem;}
 .pay-qr-lbl{font-size:.73rem;color:var(--ink3);text-align:center;line-height:1.5;}
 .pay-acct-big{font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:1px;text-align:center;}
@@ -2361,27 +2363,126 @@ window.resetAllKarbol=async()=>{};
 </div>
 
 
-<!-- BUKTI BAYAR MODAL -->
+<!-- BUKTI BAYAR MODAL — Enhanced with buyer form + imgbb upload -->
 <div class="overlay" id="ov-bukti" onclick="if(event.target===this)closeBukti()">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:380px">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:420px">
     <div class="mhd">
-      <div><div class="m-title">Upload Bukti Bayar</div><div class="m-sub" id="bukti-order-name">—</div></div>
+      <div>
+        <div class="m-title">📋 Formulir Konfirmasi Pembayaran</div>
+        <div class="m-sub" id="bukti-order-name">—</div>
+      </div>
       <button class="mx" onclick="closeBukti()">&#x2715;</button>
     </div>
-    <div class="mbody">
-      <div style="margin-bottom:14px">
-        <label class="fld" style="display:block;margin-bottom:8px">Foto Bukti Transfer / Pembayaran</label>
-        <div id="bukti-preview" style="width:100%;height:160px;background:var(--dark3);border:2px dashed var(--dark5);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.2s;overflow:hidden;position:relative" onclick="document.getElementById('bukti-file').click()">
-          <span style="font-size:2rem">📷</span>
-          <span style="font-size:.75rem;color:var(--dt3);margin-top:6px">Ketuk untuk pilih foto</span>
-          <input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">
+    <div class="mbody" style="max-height:78vh;overflow-y:auto">
+
+      <!-- Step indicator -->
+      <div style="display:flex;align-items:center;gap:0;margin-bottom:18px;padding:0 2px">
+        <div style="display:flex;align-items:center;gap:6px;flex:1">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#c84220,#e86030);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;flex-shrink:0">1</div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--dt)">Data Diri</div>
+        </div>
+        <div style="height:1px;flex:1;background:var(--dark4);margin:0 6px"></div>
+        <div style="display:flex;align-items:center;gap:6px;flex:1">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#c84220,#e86030);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;flex-shrink:0">2</div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--dt)">Bukti Transfer</div>
+        </div>
+        <div style="height:1px;flex:1;background:var(--dark4);margin:0 6px"></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#c84220,#e86030);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;flex-shrink:0">3</div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--dt)">Kirim</div>
         </div>
       </div>
-      <div style="margin-bottom:14px">
-        <label class="fld" style="display:block;margin-bottom:5px">Catatan (opsional)</label>
-        <input class="fin" type="text" id="bukti-note" placeholder="Sudah transfer via BRI...">
+
+      <!-- ── SECTION 1: Data Diri ── -->
+      <div style="background:var(--dark3);border:1px solid var(--dark4);border-radius:12px;padding:14px 16px;margin-bottom:13px">
+        <div style="font-size:.68rem;font-weight:800;color:var(--neon2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px">👤 Data Pembeli</div>
+
+        <!-- Nama -->
+        <div style="margin-bottom:10px">
+          <label class="fld" style="display:block;margin-bottom:5px">Nama Lengkap <span style="color:#f87171">*</span></label>
+          <input class="fin" type="text" id="bukti-nama" placeholder="Masukkan nama lengkap kamu" style="background:var(--dark4)">
+        </div>
+
+        <!-- No WA -->
+        <div style="margin-bottom:10px">
+          <label class="fld" style="display:block;margin-bottom:5px">Nomor WhatsApp <span style="color:#f87171">*</span></label>
+          <div style="position:relative">
+            <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.82rem;color:var(--dt2);font-weight:700">+62</span>
+            <input class="fin" type="tel" id="bukti-wa" placeholder="8xx-xxxx-xxxx" style="background:var(--dark4);padding-left:42px" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+          <div style="font-size:.62rem;color:var(--dt3);margin-top:3px">Contoh: 8123456789 (tanpa 0 di depan)</div>
+        </div>
+
+        <!-- Kelas -->
+        <div style="margin-bottom:0">
+          <label class="fld" style="display:block;margin-bottom:5px">Kelas <span style="color:#f87171">*</span></label>
+          <input class="fin" type="text" id="bukti-kelas" placeholder="Otomatis terisi dari akun" readonly style="background:var(--dark5);color:var(--dt2);cursor:not-allowed">
+          <div style="font-size:.62rem;color:var(--dt3);margin-top:3px">🔒 Diisi otomatis dari data akun kamu</div>
+        </div>
       </div>
-      <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="submitBukti()">&#x1F4E4; Kirim Bukti</button>
+
+      <!-- ── Auto-filled info ── -->
+      <div id="bukti-autoinfo" style="background:rgba(0,212,184,.06);border:1px solid rgba(0,212,184,.15);border-radius:10px;padding:11px 14px;margin-bottom:13px">
+        <div style="font-size:.65rem;font-weight:800;color:var(--neon2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">📦 Info Pesanan (Otomatis)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div>
+            <div style="font-size:.62rem;color:var(--dt3)">Paket</div>
+            <div style="font-size:.78rem;font-weight:700;color:var(--dt)" id="bukti-paket-disp">—</div>
+          </div>
+          <div>
+            <div style="font-size:.62rem;color:var(--dt3)">Total Bayar</div>
+            <div style="font-size:.78rem;font-weight:700;color:var(--neon3)" id="bukti-total-disp">—</div>
+          </div>
+          <div>
+            <div style="font-size:.62rem;color:var(--dt3)">Metode Bayar</div>
+            <div style="font-size:.78rem;font-weight:700;color:var(--sky)" id="bukti-metode-disp">—</div>
+          </div>
+          <div>
+            <div style="font-size:.62rem;color:var(--dt3)">Tanggal</div>
+            <div style="font-size:.78rem;font-weight:700;color:var(--dt)" id="bukti-tanggal-disp">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: Upload Bukti Transfer ── -->
+      <div style="background:var(--dark3);border:1px solid var(--dark4);border-radius:12px;padding:14px 16px;margin-bottom:13px">
+        <div style="font-size:.68rem;font-weight:800;color:var(--neon3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">📷 Bukti Transfer <span style="color:#f87171">*</span></div>
+        <div id="bukti-preview" style="width:100%;height:180px;background:var(--dark4);border:2px dashed rgba(200,66,10,.35);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.2s;overflow:hidden;position:relative" onclick="document.getElementById('bukti-file').click()">
+          <span style="font-size:2.2rem">📷</span>
+          <span style="font-size:.75rem;color:var(--dt3);margin-top:8px;font-weight:600">Ketuk untuk pilih foto bukti</span>
+          <span style="font-size:.65rem;color:var(--dt3);margin-top:3px">JPG, PNG, WebP — Maks 32MB</span>
+          <input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">
+        </div>
+        <!-- Upload progress -->
+        <div id="bukti-upload-progress" style="display:none;margin-top:10px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+            <div style="font-size:.72rem;color:var(--dt2);flex:1" id="bukti-progress-txt">Mengupload ke server...</div>
+            <div style="font-size:.72rem;font-weight:700;color:var(--neon2)" id="bukti-progress-pct">0%</div>
+          </div>
+          <div style="height:4px;background:var(--dark4);border-radius:4px;overflow:hidden">
+            <div id="bukti-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#c84220,#f07040);border-radius:4px;transition:width .3s"></div>
+          </div>
+        </div>
+        <!-- Upload success indicator -->
+        <div id="bukti-upload-ok" style="display:none;margin-top:8px;background:rgba(0,201,122,.1);border:1px solid rgba(0,201,122,.25);border-radius:7px;padding:7px 11px;display:flex;align-items:center;gap:7px">
+          <span style="font-size:.85rem">✅</span>
+          <span style="font-size:.72rem;color:var(--neon4);font-weight:700">Foto berhasil diupload!</span>
+        </div>
+      </div>
+
+      <!-- Catatan opsional -->
+      <div style="margin-bottom:16px">
+        <label class="fld" style="display:block;margin-bottom:5px">Catatan Tambahan <span style="color:var(--dt3);font-weight:400">(opsional)</span></label>
+        <input class="fin" type="text" id="bukti-note" placeholder="Misal: Sudah transfer via BRI tadi pagi...">
+      </div>
+
+      <!-- Submit button -->
+      <button class="btn btn-p" id="bukti-submit-btn" style="width:100%;justify-content:center;padding:13px;font-size:.9rem;font-weight:800" onclick="submitBukti()">
+        📤 Kirim Konfirmasi Pembayaran
+      </button>
+      <div style="font-size:.65rem;color:var(--dt3);text-align:center;margin-top:8px;line-height:1.5">
+        Data kamu aman. Admin akan memverifikasi pembayaran dalam 1×24 jam.
+      </div>
     </div>
   </div>
 </div>
@@ -3238,44 +3339,180 @@ function statusStepper(status){
     </div>`).join('')}</div>`;
 }
 
-/* ─── BUKTI BAYAR ─── */
-let buktiOrderId=null;
-window.openBukti=(id,name)=>{
-  buktiOrderId=id;
-  document.getElementById('bukti-order-name').textContent=name;
-  document.getElementById('bukti-note').value='';
-  const prev=document.getElementById('bukti-preview');
-  prev.innerHTML='<span style="font-size:2rem">📷</span><span style="font-size:.75rem;color:var(--dt3);margin-top:6px">Ketuk untuk pilih foto</span><input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">';
-  prev.onclick=()=>document.getElementById('bukti-file').click();
+/* ─── BUKTI BAYAR + FORMULIR PEMBELI (imgbb) ─── */
+const IMGBB_KEY = '08444766ce0d0fe85def21cc81bc062a';
+let buktiOrderId = null;
+let buktiImgbbUrl = null; // URL after imgbb upload
+let _buktiFile = null;    // raw File object
+
+window.openBukti = async (id, name) => {
+  buktiOrderId = id;
+  buktiImgbbUrl = null;
+  _buktiFile = null;
+
+  // Reset UI
+  document.getElementById('bukti-order-name').textContent = name;
+  document.getElementById('bukti-note').value = '';
+  document.getElementById('bukti-upload-ok').style.display = 'none';
+  document.getElementById('bukti-upload-progress').style.display = 'none';
+
+  // Reset preview area
+  const prev = document.getElementById('bukti-preview');
+  prev.innerHTML = `<span style="font-size:2.2rem">📷</span>
+    <span style="font-size:.75rem;color:var(--dt3);margin-top:8px;font-weight:600">Ketuk untuk pilih foto bukti</span>
+    <span style="font-size:.65rem;color:var(--dt3);margin-top:3px">JPG, PNG, WebP — Maks 32MB</span>
+    <input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">`;
+  prev.onclick = () => document.getElementById('bukti-file')?.click();
+
+  // Auto-fill from user profile
+  if (curUser) {
+    try {
+      const us = await getDoc(doc(db, 'users', curUser.uid));
+      const ud = us.data() || {};
+      const namaEl = document.getElementById('bukti-nama');
+      const kelasEl = document.getElementById('bukti-kelas');
+      if (namaEl) namaEl.value = ud.name || '';
+      if (kelasEl) kelasEl.value = ud.kelas || '';
+    } catch(e) {}
+  }
+
+  // Auto-fill order info
+  const ord = myOrders.find(o => o.id === id) || allOrders.find(o => o.id === id);
+  if (ord) {
+    const payLabels = {qris:'QRIS',dana:'Dana',gopay:'GoPay',bank:'Transfer Bank'};
+    const pdEl = document.getElementById('bukti-paket-disp');
+    const ptEl = document.getElementById('bukti-total-disp');
+    const pmEl = document.getElementById('bukti-metode-disp');
+    const ptgEl = document.getElementById('bukti-tanggal-disp');
+    if (pdEl) pdEl.textContent = ord.paket || '—';
+    if (ptEl) ptEl.textContent = fmt(ord.total || 0);
+    if (pmEl) pmEl.textContent = (ord.paymentMethod ? (payLabels[ord.paymentMethod] || ord.paymentMethod) : '—');
+    if (ptgEl) ptgEl.textContent = ord.date || fmtDate(Date.now());
+  }
+
   document.getElementById('ov-bukti').classList.add('on');
 };
-window.closeBukti=()=>document.getElementById('ov-bukti').classList.remove('on');
-window.previewBukti=(input)=>{
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const prev=document.getElementById('bukti-preview');
-    prev.innerHTML=`<img src="${e.target.result}" class="bukti-img"><input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">`;
-    prev.onclick=()=>document.getElementById('bukti-file').click();
+
+window.closeBukti = () => document.getElementById('ov-bukti').classList.remove('on');
+
+window.previewBukti = (input) => {
+  const file = input.files[0]; if (!file) return;
+  _buktiFile = file;
+  buktiImgbbUrl = null; // reset if new file selected
+  document.getElementById('bukti-upload-ok').style.display = 'none';
+  document.getElementById('bukti-upload-progress').style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('bukti-preview');
+    prev.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:contain;border-radius:8px">
+      <input type="file" id="bukti-file" accept="image/*" style="display:none" onchange="previewBukti(this)">`;
+    prev.onclick = () => document.getElementById('bukti-file')?.click();
   };
   reader.readAsDataURL(file);
 };
-window.submitBukti=async()=>{
-  if(!buktiOrderId){toast('❌ Error: tidak ada pesanan');return;}
-  const prev=document.getElementById('bukti-preview');
-  const img=prev.querySelector('img');
-  if(!img){toast('⚠️ Pilih foto bukti dulu');return;}
-  const note=document.getElementById('bukti-note').value.trim();
-  // Store as base64 in Firestore (simple, no Storage needed)
-  try{
-    await updateDoc(doc(db,'orders',buktiOrderId),{
-      buktiUrl:img.src,
-      buktiNote:note,
-      buktiAt:serverTimestamp()
+
+async function uploadToImgbb(file) {
+  const progWrap = document.getElementById('bukti-upload-progress');
+  const progBar  = document.getElementById('bukti-progress-bar');
+  const progPct  = document.getElementById('bukti-progress-pct');
+  const progTxt  = document.getElementById('bukti-progress-txt');
+  const okEl     = document.getElementById('bukti-upload-ok');
+
+  progWrap.style.display = 'block';
+  okEl.style.display = 'none';
+
+  return new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('key', IMGBB_KEY);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.imgbb.com/1/upload', true);
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const pct = Math.round((e.loaded / e.total) * 80); // up to 80%
+        progBar.style.width = pct + '%';
+        progPct.textContent = pct + '%';
+        progTxt.textContent = 'Mengupload foto...';
+      }
+    };
+
+    xhr.onload = () => {
+      progBar.style.width = '100%';
+      progPct.textContent = '100%';
+      if (xhr.status === 200) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          if (data.success) {
+            progWrap.style.display = 'none';
+            okEl.style.display = 'flex';
+            resolve(data.data.url);
+          } else {
+            progWrap.style.display = 'none';
+            reject(new Error('imgbb gagal: ' + (data.error?.message || 'Unknown')));
+          }
+        } catch(e) {
+          progWrap.style.display = 'none';
+          reject(new Error('Parse response error'));
+        }
+      } else {
+        progWrap.style.display = 'none';
+        reject(new Error('HTTP ' + xhr.status));
+      }
+    };
+
+    xhr.onerror = () => {
+      progWrap.style.display = 'none';
+      reject(new Error('Network error saat upload'));
+    };
+
+    xhr.send(formData);
+  });
+}
+
+window.submitBukti = async () => {
+  if (!buktiOrderId) { toast('❌ Error: tidak ada pesanan'); return; }
+
+  // Validasi form
+  const nama  = (document.getElementById('bukti-nama')?.value || '').trim();
+  const wa    = (document.getElementById('bukti-wa')?.value || '').trim();
+  const kelas = (document.getElementById('bukti-kelas')?.value || '').trim();
+  const note  = (document.getElementById('bukti-note')?.value || '').trim();
+
+  if (!nama)  { toast('⚠️ Masukkan nama lengkap dulu'); document.getElementById('bukti-nama')?.focus(); return; }
+  if (!wa || wa.length < 7) { toast('⚠️ Nomor WhatsApp tidak valid'); document.getElementById('bukti-wa')?.focus(); return; }
+  if (!_buktiFile) { toast('⚠️ Pilih foto bukti transfer dulu'); return; }
+
+  const btn = document.getElementById('bukti-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Memproses...';
+
+  try {
+    // Upload to imgbb
+    btn.textContent = '📤 Mengupload foto...';
+    const imgUrl = await uploadToImgbb(_buktiFile);
+    buktiImgbbUrl = imgUrl;
+
+    // Save to Firestore
+    btn.textContent = '💾 Menyimpan data...';
+    await updateDoc(doc(db, 'orders', buktiOrderId), {
+      buktiUrl:    imgUrl,
+      buktiNote:   note,
+      buktiAt:     serverTimestamp(),
+      buyerNama:   nama,
+      buyerWa:     '+62' + wa,
+      buyerKelas:  kelas,
     });
+
     closeBukti();
-    toast('✅ Bukti bayar terkirim!');
-  }catch(e){toast('❌ Gagal kirim: '+e.message);}
+    toast('✅ Konfirmasi pembayaran terkirim!');
+  } catch(e) {
+    toast('❌ Gagal: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📤 Kirim Konfirmasi Pembayaran';
+  }
 };
 
 /* ─── ORDER DETAIL USER ─── */
@@ -3613,7 +3850,20 @@ window.openDetail=id=>{
   // Bukti bayar admin view
   const buktiWrap=document.getElementById('d-bukti-wrap');
   if(buktiWrap && o.buktiUrl){
-    buktiWrap.innerHTML=`<div style="padding:8px 16px 13px"><div style="font-size:.72rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Bukti Bayar</div><img src="${o.buktiUrl}" style="width:100%;border-radius:8px;max-height:200px;object-fit:contain;background:#111" onerror="this.parentElement.innerHTML='<span style=color:var(--dt3);font-size:.75rem>Gagal memuat gambar</span>"><div style="font-size:.72rem;color:var(--dt3);margin-top:5px">${o.buktiNote||''}</div></div>`;
+    const buyerInfoHtml = (o.buyerNama||o.buyerWa) ? `
+      <div style="background:rgba(0,212,184,.07);border:1px solid rgba(0,212,184,.15);border-radius:8px;padding:9px 12px;margin-bottom:9px">
+        <div style="font-size:.63rem;font-weight:800;color:var(--neon2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px">📋 Data Konfirmasi Pembeli</div>
+        ${o.buyerNama?`<div style="display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:4px"><span style="color:var(--dt3)">Nama</span><span style="color:var(--dt);font-weight:700">${o.buyerNama}</span></div>`:``}
+        ${o.buyerWa?`<div style="display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:4px"><span style="color:var(--dt3)">No. WA</span><a href="https://wa.me/${o.buyerWa.replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--neon4);font-weight:700;text-decoration:none">${o.buyerWa} 💬</a></div>`:``}
+        ${o.buyerKelas?`<div style="display:flex;justify-content:space-between;font-size:.76rem"><span style="color:var(--dt3)">Kelas</span><span style="color:var(--dt);font-weight:700">${o.buyerKelas}</span></div>`:``}
+      </div>` : ``;
+    buktiWrap.innerHTML=`<div style="padding:8px 16px 13px">
+      ${buyerInfoHtml}
+      <div style="font-size:.72rem;font-weight:700;color:var(--dt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">📷 Bukti Transfer</div>
+      <img src="${o.buktiUrl}" style="width:100%;border-radius:8px;max-height:220px;object-fit:contain;background:#111;cursor:pointer" onclick="window.open('${o.buktiUrl}','_blank')">
+      <div style="font-size:.72rem;color:var(--dt3);margin-top:5px">${o.buktiNote||''}</div>
+      <a href="${o.buktiUrl}" target="_blank" style="display:inline-block;margin-top:7px;font-size:.68rem;color:var(--neon2);text-decoration:none">🔗 Buka di tab baru</a>
+    </div>`;
   } else if(buktiWrap){
     buktiWrap.innerHTML='';
   }
@@ -3888,10 +4138,14 @@ function renderPayDetail(key){
     html = `
       <div class="pay-qr-box">
         ${cfg.qrData
-          ? `<img class="pay-qr-img" src="${cfg.qrData}" alt="QR Code">`
+          ? `<div style="position:relative;display:inline-block">
+               <img class="pay-qr-img" id="qr-img-qris" src="${cfg.qrData}" alt="QR Code" style="cursor:zoom-in" onclick="openQRFullscreen('${cfg.qrData}','QRIS — ${cfg.name||'Unit Produksi'}')">
+               <div class="qr-dl-badge" onclick="downloadQR('${cfg.qrData}','QR_QRIS_${(cfg.name||'UnitProduksi').replace(/\s/g,'_')}')">⬇ Simpan</div>
+             </div>`
           : `<div class="pay-qr-fallback"><span>🟡</span><span style="font-size:.72rem;color:#aaa">QR Code QRIS</span></div>`}
         <div class="pay-acct-big">${cfg.name||'Unit Produksi'}</div>
         <div class="pay-qr-lbl">Scan QR Code dengan aplikasi m-banking atau e-wallet manapun</div>
+        ${cfg.qrData?`<button class="pay-copy-btn" style="background:linear-gradient(135deg,#c84220,#e86030);color:#fff;border:none;gap:5px" onclick="downloadQR('${cfg.qrData}','QR_QRIS_${(cfg.name||'UnitProduksi').replace(/\s/g,'_')}')">⬇️ Download QR Code</button>`:''}
         ${cfg.note?`<div style="font-size:.72rem;color:var(--gold);text-align:center">⚠️ ${cfg.note}</div>`:''}
       </div>
       <div class="pay-total-remind">
@@ -3902,7 +4156,8 @@ function renderPayDetail(key){
         <div class="pay-step"><div class="pay-step-num">1</div><div class="pay-step-txt">Buka aplikasi m-banking atau e-wallet</div></div>
         <div class="pay-step"><div class="pay-step-num">2</div><div class="pay-step-txt">Pilih menu Scan / QRIS</div></div>
         <div class="pay-step"><div class="pay-step-num">3</div><div class="pay-step-txt">Scan QR Code di atas dan masukkan nominal <b id="pay-step-total">${fmt(total)}</b></div></div>
-        <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-txt">Upload bukti bayar setelah transfer berhasil</div></div>
+        <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-txt">💡 Atau <b>download QR</b> lalu upload di aplikasi m-banking</div></div>
+        <div class="pay-step"><div class="pay-step-num">5</div><div class="pay-step-txt">Upload bukti bayar setelah transfer berhasil</div></div>
       </div>`;
   } else if(key==='dana'||key==='gopay'){
     const label = key==='dana'?'Dana':'GoPay';
@@ -3910,11 +4165,17 @@ function renderPayDetail(key){
     html = `
       <div class="pay-qr-box">
         ${cfg.qrData
-          ? `<img class="pay-qr-img" src="${cfg.qrData}" alt="QR ${label}">`
+          ? `<div style="position:relative;display:inline-block">
+               <img class="pay-qr-img" src="${cfg.qrData}" alt="QR ${label}" style="cursor:zoom-in" onclick="openQRFullscreen('${cfg.qrData}','${label} — ${cfg.number||''}')">
+               <div class="qr-dl-badge" onclick="downloadQR('${cfg.qrData}','QR_${label}_${(cfg.name||'').replace(/\s/g,'_')}')">⬇ Simpan</div>
+             </div>`
           : `<div class="pay-qr-fallback"><span>${key==='dana'?'🔵':'🟢'}</span><span style="font-size:.72rem;color:#aaa">QR ${label}</span></div>`}
         <div class="pay-acct-big" style="color:${color}">${cfg.number||'—'}</div>
         <div style="font-size:.8rem;font-weight:700;color:var(--ink)">${cfg.name||'—'}</div>
-        <button class="pay-copy-btn" onclick="copyPayNum('${cfg.number||''}',this)">📋 Salin Nomor</button>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center">
+          <button class="pay-copy-btn" onclick="copyPayNum('${cfg.number||''}',this)">📋 Salin Nomor</button>
+          ${cfg.qrData?`<button class="pay-copy-btn" style="background:linear-gradient(135deg,#c84220,#e86030);color:#fff;border:none" onclick="downloadQR('${cfg.qrData}','QR_${label}_${(cfg.name||'').replace(/\s/g,'_')}')">⬇️ Download QR</button>`:''}
+        </div>
       </div>
       <div class="pay-total-remind">
         <span>Nominal Transfer</span>
@@ -3961,6 +4222,64 @@ window.copyPayNum = (num, btn)=>{
     btn.classList.add('copied');
     setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Salin Nomor';},2000);
   }).catch(()=>{ toast('Nomor: '+num); });
+};
+
+/* ── Download QR image ── */
+window.downloadQR = async (src, filename) => {
+  if(!src){ toast('⚠️ QR tidak tersedia'); return; }
+  try{
+    // If already base64 data URL — download directly
+    if(src.startsWith('data:')){
+      const a = document.createElement('a');
+      a.href = src;
+      a.download = (filename||'QR_Code') + '.png';
+      a.click();
+      toast('✅ QR berhasil didownload!');
+      return;
+    }
+    // If external URL — fetch as blob
+    const res = await fetch(src);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = (filename||'QR_Code') + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 3000);
+    toast('✅ QR berhasil didownload!');
+  }catch(e){
+    // Fallback: open in new tab
+    window.open(src, '_blank');
+    toast('💡 Klik kanan gambar → Simpan untuk menyimpan QR');
+  }
+};
+
+/* ── QR Fullscreen viewer ── */
+window.openQRFullscreen = (src, label) => {
+  let ov = document.getElementById('ov-qr-fs');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.id = 'ov-qr-fs';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px;backdrop-filter:blur(8px)';
+    ov.onclick = (e)=>{ if(e.target===ov) closeQRFullscreen(); };
+    document.body.appendChild(ov);
+  }
+  ov.innerHTML = `
+    <div style="font-size:.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px">${label||'QR Code'}</div>
+    <img src="${src}" style="max-width:min(320px,85vw);max-height:min(320px,60vh);border-radius:14px;background:#fff;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.7)">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button onclick="downloadQR('${src}','${(label||'QR').replace(/\s|—/g,'_')}')" style="padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,#c84220,#e86030);color:#fff;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px">⬇️ Download QR</button>
+      <button onclick="closeQRFullscreen()" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#ddd;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:600;cursor:pointer">✕ Tutup</button>
+    </div>
+    <div style="font-size:.65rem;color:#555;text-align:center">Ketuk di luar untuk menutup · Tahan gambar untuk menyimpan (di HP)</div>
+  `;
+  ov.style.display = 'flex';
+};
+window.closeQRFullscreen = () => {
+  const ov = document.getElementById('ov-qr-fs');
+  if(ov) ov.style.display = 'none';
 };
 
 /* Build success payment info */
